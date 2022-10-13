@@ -8,11 +8,12 @@ namespace CoD2WorldspawnConfigurator
 {
 
     internal class MapInfo
-    {   
-        public string FileURL { get; set;}
+    {
+        public string FileURL { get; set; }
         public string Name { get; set; }
         private List<WorldspawnKeyVal> worldspawnKeyVals;
         public List<WorldspawnKeyVal> WorldspawnKeyVals { get { return worldspawnKeyVals; } set { worldspawnKeyVals = value; } }
+        public Worldspawn Worldspawn { get; set; }
 
         public MapInfo()
         {
