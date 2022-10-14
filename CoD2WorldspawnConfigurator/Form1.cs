@@ -12,11 +12,25 @@ namespace CoD2WorldspawnConfigurator
 {
     public partial class Form1 : Form
     {
+        string sourceFolderURL = "";
+        List<string> mapNames = new List<string>();
         MapInfo loadedMap = new MapInfo();
 
         public Form1()
         {
             InitializeComponent();
+
+            // TODO: load path from settings file
+            PreloadMapsFromURL("D:\\Steam\\steamapps\\common\\Call of Duty 2\\map_source"); //FOR TESTING
+
+        }
+
+        private void PreloadMapsFromURL(string url)
+        {
+            loadedMap = null;
+            sourceFolderURL = url;
+            mapNames = MapHandler.GetAllMapNamesInFolder(sourceFolderURL).ToList();
+            LoadListBoxWithNames(mapNames);
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -108,20 +122,55 @@ namespace CoD2WorldspawnConfigurator
 
         private void btn_save_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Function Not Implemented");
+            if(loadedMap != null)
+            {
+                DialogResult result = MessageBox.Show($@"Are you sure you want to overwrite the worldspawn of {loadedMap.Name}?");
+
+                if (result == DialogResult.Yes)
+                {
+                    MessageBox.Show("Function Not Implemented");
+                    // Save the map using MapHandler
+                }
+                else if (result == DialogResult.No)
+                {
+                    // Reloaded the maps current worldspawn
+                }
+            }
         }
 
         private void btn_load_Click(object sender, EventArgs e)
         {
-            // load the map
-            loadTestMap();
+            // Open a folder browser
+            FolderBrowserDialog browser = new FolderBrowserDialog();
+            DialogResult result = browser.ShowDialog();
 
-            // if map loaded properly, load the values into ui
-            if(loadedMap != null)
+
+            if(result == DialogResult.OK)
             {
-                LoadMapValues(loadedMap);
+                sourceFolderURL = browser.SelectedPath;
+                lbl_folderPath.Text = sourceFolderURL;
+                // TODO: Add path to settings file
             }
-                
+
+            // Get all maps from the chosen folder
+            loadedMap = null;
+            mapNames = MapHandler.GetAllMapNamesInFolder(sourceFolderURL).ToList();
+
+            LoadListBoxWithNames(mapNames);
+               
+        }
+
+        private void LoadListBoxWithNames(List<string> names)
+        {
+            listBox_MapList.Items.Clear();
+            foreach(string n in names)
+            {
+                if (n.EndsWith(".map"))
+                {
+                    string[] nameSplit = n.Split('\\');
+                    listBox_MapList.Items.Add(nameSplit[nameSplit.Length - 1]);
+                }
+            }
         }
 
         private void loadTestMap()
@@ -181,6 +230,50 @@ namespace CoD2WorldspawnConfigurator
             slider_bouncefraction.Value = (int)float.Parse(map.GetWorldspawnValue("bouncefraction").Value) * 100;
 
             UpdateUI();
+        }
+
+        private void lbl_loadedmapname_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_default_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox_MapList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string chosenMapURL;
+            loadedMap = null;
+
+            if (mapNames[listBox_MapList.SelectedIndex] != null)
+                chosenMapURL = mapNames[listBox_MapList.SelectedIndex];
+            else 
+                chosenMapURL = "";
+
+            if (chosenMapURL != "")
+            {
+                loadedMap = MapHandler.GetMapInfo(chosenMapURL);
+
+                if(loadedMap != null)
+                {
+                    string worldspawnString = "";
+
+                    if (loadedMap.WorldspawnKeyVals.Count == 0) 
+                        worldspawnString = $@"No Worldspawn Found";
+                    else 
+                    { 
+                        foreach (WorldspawnKeyVal keyVal in loadedMap.WorldspawnKeyVals)
+                        {
+                            worldspawnString += $@"{keyVal.Key}, {keyVal.Value}{System.Environment.NewLine}";
+                        }        
+                    }
+                    
+                    MessageBox.Show($@"This would load the values for {loadedMap.Name}{System.Environment.NewLine}{worldspawnString}");
+
+                }
+            }
         }
     }
 }

@@ -24,6 +24,16 @@ namespace CoD2WorldspawnConfigurator
             return File.Exists($@"{mapSourceFolder}{mapName}{mapExtension}");
         }
 
+        public static string[] GetAllMapNamesInFolder(string rootFolder)
+        {
+            string[] names = { };
+            if(rootFolder != null && rootFolder != "")
+            {
+                names = Directory.GetFiles(rootFolder);
+            }
+            return names;
+        }
+
         //returns false if an error occurs
         public static List<WorldspawnKeyVal> GetWorldspawnSettings(string mapName)
         {
@@ -110,8 +120,16 @@ namespace CoD2WorldspawnConfigurator
 
             // ALTER WORLDSPAWN HERE
 
-            // 
+            int worldspawnStartIndex = 0;
+            int worldspawnLastIndex = 0;
+            for (int i = 0; i < allLines.Count; i++)
+            {
+                if (allLines[i] == $@"// entity 0")
+                {
+                    i += 1;
+                }
 
+            }
             // ---------------------
 
             // Write lines back to file
@@ -119,7 +137,10 @@ namespace CoD2WorldspawnConfigurator
             {
                 using (StreamWriter writer = new StreamWriter(mapSourceFolder + mapName + mapExtension))
                 {
-
+                    foreach(string line in allLines)
+                    {
+                        writer.WriteLine(line);
+                    }
                 }
             }
             catch (Exception)
@@ -128,6 +149,38 @@ namespace CoD2WorldspawnConfigurator
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Returns null if getting info was unsuccessful
+        /// </summary>
+        /// <param name="fullURL"></param>
+        /// <returns></returns>
+        public static MapInfo GetMapInfo(string fullURL)
+        {
+            if (!File.Exists(fullURL)) return null;
+            if (!fullURL.EndsWith(".map")) return null;
+
+            // Isolate the maps name
+            string mapName = "";
+            string[] urlSections = fullURL.Split('\\');
+
+            if (urlSections.Length > 1)
+                mapName = urlSections[urlSections.Length - 1];
+            else
+                return null;
+
+            // package mapinfo with things
+            MapInfo mapInfo = new MapInfo();
+            mapInfo.Name = mapName;
+            mapInfo.WorldspawnKeyVals = GetWorldspawnSettings(mapName);
+
+            if (mapInfo.WorldspawnKeyVals == null)
+            {
+                mapInfo.WorldspawnKeyVals = new List<WorldspawnKeyVal>();
+            }
+
+            return mapInfo;
         }
     }
 }
