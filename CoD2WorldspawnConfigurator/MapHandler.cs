@@ -13,25 +13,34 @@ namespace CoD2WorldspawnConfigurator
         private static string mapSourceFolder = "";
         private static readonly string mapExtension = ".map";
 
+        // TODO: WORLDSPAWN DOESNT LOAD WHEN SELECTING IN LISTBOX
+        //       POSSIBLY DOWN TO MAPSOURCEFOLDER 
+
         public static void SetMapSourceFolder(string path)
         {
             mapSourceFolder = path;
-            if (!mapSourceFolder.EndsWith("/")) { mapSourceFolder += "/"; }
+            if (!mapSourceFolder.EndsWith("\\")) { mapSourceFolder += "\\"; }
         }
 
         public static bool MapExists(string mapName)
         {
-            return File.Exists($@"{mapSourceFolder}{mapName}{mapExtension}");
+            string fullMapUrl = $@"{mapSourceFolder}{mapName}";
+            bool exists = File.Exists(fullMapUrl);
+            return exists;
         }
 
         public static string[] GetAllMapNamesInFolder(string rootFolder)
         {
-            string[] names = { };
-            if(rootFolder != null && rootFolder != "")
+            if (rootFolder == null || rootFolder == "") return null;
+
+            List<string> filteredNames = new List<string>();
+            string[] names = Directory.GetFiles(rootFolder);
+            for (int i = 0; i < names.Length; i++)
             {
-                names = Directory.GetFiles(rootFolder);
+                if (names[i].EndsWith(".map") || names[i].EndsWith(".map\\"))
+                    filteredNames.Add(names[i]);
             }
-            return names;
+            return filteredNames.ToArray();
         }
 
         //returns false if an error occurs
@@ -46,7 +55,7 @@ namespace CoD2WorldspawnConfigurator
 
             try
             {
-                using (StreamReader reader = new StreamReader(mapSourceFolder + mapName + mapExtension))
+                using (StreamReader reader = new StreamReader(mapSourceFolder + mapName))
                 {
                     string currentLine = "";
 
