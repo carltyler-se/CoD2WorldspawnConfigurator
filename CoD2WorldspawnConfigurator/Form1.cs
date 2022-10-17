@@ -17,7 +17,7 @@ namespace CoD2WorldspawnConfigurator
         List<string> mapNames = new List<string>();
         MapInfo loadedMap = new MapInfo();
 
-        int sliderMultiplier = 100;
+        decimal sliderMultiplier = 100;
 
         public Form1()
         {
@@ -191,40 +191,32 @@ namespace CoD2WorldspawnConfigurator
 
             textBox1.Text = w.GetKeyVal("classname").Value;
 
-            int maxRGB = 256;
-            int minRGB = 0;
-
-            // TODO: NORMALISE RGB VALUES FROM MAX OF 1 TO 256
-            string[] colorVals = w.GetKeyVal("_color").Value.Split(' ');
-            //      z      = ( x – min(x)) / (max(x) – min(x)) * 100
-            // normalisedR = (256 - 0) / ()
-
-
-            numeric_color_r.Value = int.Parse(colorVals[0]);
-            numeric_color_g.Value = int.Parse(colorVals[1]);
-            numeric_color_b.Value = int.Parse(colorVals[2]);
+            string[] colorVals = w.GetKeyVal("_color").Value.Split(' '); 
+            numeric_color_r.Value = decimal.Parse(colorVals[0]);
+            numeric_color_g.Value = decimal.Parse(colorVals[1]);
+            numeric_color_b.Value = decimal.Parse(colorVals[2]);
 
             string[] sunColorVals = w.GetKeyVal("suncolor").Value.Split(' ');
-            numeric_suncolor_r.Value = int.Parse(sunColorVals[0]);
-            numeric_suncolor_g.Value = int.Parse(sunColorVals[1]);
-            numeric_suncolor_b.Value = int.Parse(sunColorVals[2]);
+            numeric_suncolor_r.Value = decimal.Parse(sunColorVals[0]);
+            numeric_suncolor_g.Value = decimal.Parse(sunColorVals[1]);
+            numeric_suncolor_b.Value = decimal.Parse(sunColorVals[2]);
 
             string[] sunDiffuseColorVals = w.GetKeyVal("sundiffusecolor").Value.Split(' ');
-            numeric_sundiffusecolor_r.Value = int.Parse(sunDiffuseColorVals[0]);
-            numeric_sundiffusecolor_g.Value = int.Parse(sunDiffuseColorVals[1]);
-            numeric_sundiffusecolor_b.Value = int.Parse(sunDiffuseColorVals[2]);
+            numeric_sundiffusecolor_r.Value = decimal.Parse(sunDiffuseColorVals[0]);
+            numeric_sundiffusecolor_g.Value = decimal.Parse(sunDiffuseColorVals[1]);
+            numeric_sundiffusecolor_b.Value = decimal.Parse(sunDiffuseColorVals[2]);
 
             string[] sunDirectionVals = w.GetKeyVal("sundirection").Value.Split(' ');
             numeric_sundirection_x.Value = int.Parse(sunDirectionVals[0]);
             numeric_sundirection_y.Value = int.Parse(sunDirectionVals[1]);
             numeric_sundirection_z.Value = int.Parse(sunDirectionVals[2]);
 
-            slider_ambient.Value = int.Parse(w.GetKeyVal("ambient").Value) * sliderMultiplier;
-            slider_northyaw.Value = int.Parse(w.GetKeyVal("northyaw").Value) * sliderMultiplier;
-            slider_diffusefraction.Value = int.Parse(w.GetKeyVal("diffusefraction").Value) * sliderMultiplier;
-            slider_sunlight.Value = int.Parse(w.GetKeyVal("sunlight").Value) * sliderMultiplier;
-            slider_contrastgain.Value = int.Parse(w.GetKeyVal("contrastgain").Value) * sliderMultiplier;
-            slider_bouncefraction.Value = int.Parse(w.GetKeyVal("bouncefraction").Value) * sliderMultiplier;
+            slider_ambient.Value = (int)(decimal.Parse(w.GetKeyVal("ambient").Value) * sliderMultiplier);
+            slider_northyaw.Value = (int)(decimal.Parse(w.GetKeyVal("northyaw").Value));
+            slider_diffusefraction.Value = (int)(decimal.Parse(w.GetKeyVal("diffusefraction").Value) * sliderMultiplier);
+            slider_sunlight.Value = (int)(decimal.Parse(w.GetKeyVal("sunlight").Value) * sliderMultiplier);
+            slider_contrastgain.Value = (int)(decimal.Parse(w.GetKeyVal("contrastgain").Value) * sliderMultiplier);
+            slider_bouncefraction.Value = (int)(decimal.Parse(w.GetKeyVal("bouncefraction").Value) * sliderMultiplier);
 
             UpdateUI();
         }
@@ -266,8 +258,7 @@ namespace CoD2WorldspawnConfigurator
                             {
                                 worldspawnString += $@"{keyVal.Key}, {keyVal.Value}{System.Environment.NewLine}";
                             }        
-                        }    
-                        MessageBox.Show($@"Loading values for {loadedMap.Name}{System.Environment.NewLine}{worldspawnString}");
+                        }
 
                         SetUIValues();
                 

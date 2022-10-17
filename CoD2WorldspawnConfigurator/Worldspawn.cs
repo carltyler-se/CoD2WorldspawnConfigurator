@@ -76,11 +76,19 @@ namespace CoD2WorldspawnConfigurator
 
         public WorldspawnKeyVal GetKeyVal(string key)
         {
+            string keyLower = key.ToLower();
             foreach (WorldspawnKeyVal kv in worldspawnKeyVals)
             {
-                if (key == kv.Key) return kv;
+                if (keyLower == kv.Key) return kv;
             }
-            return null;
+
+            // return a default value for each key, should it not exist
+            if (keyLower == "suncolor" || keyLower == "sundiffusecolor" || keyLower == "_color" || keyLower == "sundirection")
+                return new WorldspawnKeyVal(keyLower, "0 0 0");
+            else if (keyLower == "classname") 
+                return new WorldspawnKeyVal(keyLower, "worldspawn");
+            else
+                return new WorldspawnKeyVal(keyLower, "0");
         }
 
         public bool DoesKeyValExist(string key)

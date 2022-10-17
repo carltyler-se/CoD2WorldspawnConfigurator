@@ -42,8 +42,6 @@
             this.lbl_bouncefraction_value = new System.Windows.Forms.Label();
             this.slider_bouncefraction = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
-            this.lbl_loadedmapname = new System.Windows.Forms.Label();
-            this.lbl_loadedmap = new System.Windows.Forms.Label();
             this.lbl_contrastgain_value = new System.Windows.Forms.Label();
             this.numeric_sundirection_z = new System.Windows.Forms.NumericUpDown();
             this.slider_contrastgain = new System.Windows.Forms.TrackBar();
@@ -79,6 +77,8 @@
             this.lbl_color_r = new System.Windows.Forms.Label();
             this.slider_northyaw = new System.Windows.Forms.TrackBar();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.lbl_loadedmapname = new System.Windows.Forms.Label();
+            this.lbl_loadedmap = new System.Windows.Forms.Label();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.colorDialog2 = new System.Windows.Forms.ColorDialog();
             this.btn_load = new System.Windows.Forms.Button();
@@ -260,7 +260,7 @@
             this.grpbox_worldspawn.Controls.Add(this.lbl_sundiffusecolor);
             this.grpbox_worldspawn.Location = new System.Drawing.Point(257, 52);
             this.grpbox_worldspawn.Name = "grpbox_worldspawn";
-            this.grpbox_worldspawn.Size = new System.Drawing.Size(455, 539);
+            this.grpbox_worldspawn.Size = new System.Drawing.Size(473, 539);
             this.grpbox_worldspawn.TabIndex = 10;
             this.grpbox_worldspawn.TabStop = false;
             this.grpbox_worldspawn.Text = "worldspawn";
@@ -296,29 +296,6 @@
             this.label1.Size = new System.Drawing.Size(137, 20);
             this.label1.TabIndex = 37;
             this.label1.Text = "Bounce Fraction:";
-            // 
-            // lbl_loadedmapname
-            // 
-            this.lbl_loadedmapname.AutoEllipsis = true;
-            this.lbl_loadedmapname.AutoSize = true;
-            this.lbl_loadedmapname.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.lbl_loadedmapname.Location = new System.Drawing.Point(339, 20);
-            this.lbl_loadedmapname.MinimumSize = new System.Drawing.Size(130, 0);
-            this.lbl_loadedmapname.Name = "lbl_loadedmapname";
-            this.lbl_loadedmapname.Size = new System.Drawing.Size(130, 17);
-            this.lbl_loadedmapname.TabIndex = 36;
-            this.lbl_loadedmapname.Text = "[No Map Selected]";
-            this.lbl_loadedmapname.Click += new System.EventHandler(this.lbl_loadedmapname_Click);
-            // 
-            // lbl_loadedmap
-            // 
-            this.lbl_loadedmap.AutoSize = true;
-            this.lbl_loadedmap.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.lbl_loadedmap.Location = new System.Drawing.Point(254, 20);
-            this.lbl_loadedmap.Name = "lbl_loadedmap";
-            this.lbl_loadedmap.Size = new System.Drawing.Size(95, 17);
-            this.lbl_loadedmap.TabIndex = 14;
-            this.lbl_loadedmap.Text = "Loaded Map: ";
             // 
             // lbl_contrastgain_value
             // 
@@ -364,6 +341,11 @@
             0,
             0,
             0});
+            this.numeric_sundirection_y.Minimum = new decimal(new int[] {
+            359,
+            0,
+            0,
+            -2147483648});
             this.numeric_sundirection_y.Name = "numeric_sundirection_y";
             this.numeric_sundirection_y.Size = new System.Drawing.Size(62, 23);
             this.numeric_sundirection_y.TabIndex = 34;
@@ -378,6 +360,11 @@
             0,
             0,
             0});
+            this.numeric_sundirection_x.Minimum = new decimal(new int[] {
+            359,
+            0,
+            0,
+            -2147483648});
             this.numeric_sundirection_x.Name = "numeric_sundirection_x";
             this.numeric_sundirection_x.Size = new System.Drawing.Size(62, 23);
             this.numeric_sundirection_x.TabIndex = 35;
@@ -436,10 +423,16 @@
             // 
             // numeric_sundiffusecolor_b
             // 
+            this.numeric_sundiffusecolor_b.DecimalPlaces = 2;
             this.numeric_sundiffusecolor_b.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.numeric_sundiffusecolor_b.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numeric_sundiffusecolor_b.Location = new System.Drawing.Point(381, 308);
             this.numeric_sundiffusecolor_b.Maximum = new decimal(new int[] {
-            256,
+            1,
             0,
             0,
             0});
@@ -450,10 +443,16 @@
             // 
             // numeric_sundiffusecolor_g
             // 
+            this.numeric_sundiffusecolor_g.DecimalPlaces = 2;
             this.numeric_sundiffusecolor_g.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.numeric_sundiffusecolor_g.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numeric_sundiffusecolor_g.Location = new System.Drawing.Point(284, 308);
             this.numeric_sundiffusecolor_g.Maximum = new decimal(new int[] {
-            256,
+            1,
             0,
             0,
             0});
@@ -464,10 +463,16 @@
             // 
             // numeric_sundiffusecolor_r
             // 
+            this.numeric_sundiffusecolor_r.DecimalPlaces = 2;
             this.numeric_sundiffusecolor_r.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.numeric_sundiffusecolor_r.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numeric_sundiffusecolor_r.Location = new System.Drawing.Point(188, 307);
             this.numeric_sundiffusecolor_r.Maximum = new decimal(new int[] {
-            256,
+            1,
             0,
             0,
             0});
@@ -560,10 +565,16 @@
             // 
             // numeric_suncolor_b
             // 
+            this.numeric_suncolor_b.DecimalPlaces = 2;
             this.numeric_suncolor_b.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.numeric_suncolor_b.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numeric_suncolor_b.Location = new System.Drawing.Point(381, 257);
             this.numeric_suncolor_b.Maximum = new decimal(new int[] {
-            256,
+            1,
             0,
             0,
             0});
@@ -574,10 +585,16 @@
             // 
             // numeric_suncolor_g
             // 
+            this.numeric_suncolor_g.DecimalPlaces = 2;
             this.numeric_suncolor_g.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.numeric_suncolor_g.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numeric_suncolor_g.Location = new System.Drawing.Point(284, 258);
             this.numeric_suncolor_g.Maximum = new decimal(new int[] {
-            256,
+            1,
             0,
             0,
             0});
@@ -588,10 +605,16 @@
             // 
             // numeric_color_b
             // 
+            this.numeric_color_b.DecimalPlaces = 2;
             this.numeric_color_b.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.numeric_color_b.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numeric_color_b.Location = new System.Drawing.Point(381, 114);
             this.numeric_color_b.Maximum = new decimal(new int[] {
-            256,
+            1,
             0,
             0,
             0});
@@ -602,10 +625,16 @@
             // 
             // numeric_suncolor_r
             // 
+            this.numeric_suncolor_r.DecimalPlaces = 2;
             this.numeric_suncolor_r.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.numeric_suncolor_r.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numeric_suncolor_r.Location = new System.Drawing.Point(188, 258);
             this.numeric_suncolor_r.Maximum = new decimal(new int[] {
-            256,
+            1,
             0,
             0,
             0});
@@ -616,10 +645,16 @@
             // 
             // numeric_color_g
             // 
+            this.numeric_color_g.DecimalPlaces = 2;
             this.numeric_color_g.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.numeric_color_g.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numeric_color_g.Location = new System.Drawing.Point(284, 114);
             this.numeric_color_g.Maximum = new decimal(new int[] {
-            256,
+            1,
             0,
             0,
             0});
@@ -640,10 +675,16 @@
             // 
             // numeric_color_r
             // 
+            this.numeric_color_r.DecimalPlaces = 2;
             this.numeric_color_r.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.numeric_color_r.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numeric_color_r.Location = new System.Drawing.Point(188, 114);
             this.numeric_color_r.Maximum = new decimal(new int[] {
-            256,
+            1,
             0,
             0,
             0});
@@ -706,6 +747,7 @@
             // 
             this.slider_northyaw.Location = new System.Drawing.Point(163, 66);
             this.slider_northyaw.Maximum = 359;
+            this.slider_northyaw.Minimum = -359;
             this.slider_northyaw.Name = "slider_northyaw";
             this.slider_northyaw.Size = new System.Drawing.Size(262, 45);
             this.slider_northyaw.TabIndex = 11;
@@ -720,6 +762,29 @@
             this.textBox1.Size = new System.Drawing.Size(156, 20);
             this.textBox1.TabIndex = 11;
             this.textBox1.Text = "worldspawn";
+            // 
+            // lbl_loadedmapname
+            // 
+            this.lbl_loadedmapname.AutoEllipsis = true;
+            this.lbl_loadedmapname.AutoSize = true;
+            this.lbl_loadedmapname.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.lbl_loadedmapname.Location = new System.Drawing.Point(339, 20);
+            this.lbl_loadedmapname.MinimumSize = new System.Drawing.Size(130, 0);
+            this.lbl_loadedmapname.Name = "lbl_loadedmapname";
+            this.lbl_loadedmapname.Size = new System.Drawing.Size(130, 17);
+            this.lbl_loadedmapname.TabIndex = 36;
+            this.lbl_loadedmapname.Text = "[No Map Selected]";
+            this.lbl_loadedmapname.Click += new System.EventHandler(this.lbl_loadedmapname_Click);
+            // 
+            // lbl_loadedmap
+            // 
+            this.lbl_loadedmap.AutoSize = true;
+            this.lbl_loadedmap.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.lbl_loadedmap.Location = new System.Drawing.Point(254, 20);
+            this.lbl_loadedmap.Name = "lbl_loadedmap";
+            this.lbl_loadedmap.Size = new System.Drawing.Size(95, 17);
+            this.lbl_loadedmap.TabIndex = 14;
+            this.lbl_loadedmap.Text = "Loaded Map: ";
             // 
             // btn_load
             // 
@@ -737,7 +802,7 @@
             this.btn_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
             this.btn_save.Location = new System.Drawing.Point(623, 12);
             this.btn_save.Name = "btn_save";
-            this.btn_save.Size = new System.Drawing.Size(89, 34);
+            this.btn_save.Size = new System.Drawing.Size(107, 34);
             this.btn_save.TabIndex = 13;
             this.btn_save.Text = "Save";
             this.btn_save.UseVisualStyleBackColor = true;
@@ -777,7 +842,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(723, 602);
+            this.ClientSize = new System.Drawing.Size(742, 602);
             this.Controls.Add(this.lbl_folderPath);
             this.Controls.Add(this.btn_default);
             this.Controls.Add(this.listBox_MapList);
