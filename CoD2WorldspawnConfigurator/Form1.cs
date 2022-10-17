@@ -11,27 +11,19 @@ using System.Windows.Forms;
 
 namespace CoD2WorldspawnConfigurator
 {
-    /*
-     * 
-     *  TODO: NO RESPAWN FOUND ON NEWVILLERS AND NEWVILLERS GEO
-     * 
-     * 
-     */
     public partial class Form1 : Form
     {
         string sourceFolderURL = "";
         List<string> mapNames = new List<string>();
         MapInfo loadedMap = new MapInfo();
 
+        int sliderMultiplier = 100;
+
         public Form1()
         {
             InitializeComponent();
             Settings.SettingsFileLocation = Directory.GetCurrentDirectory() + "\\settings.ini";
-
-
             MapHandler.SetMapSourceFolder(Settings.GetMapSourceFolderUrl());
-
-
             PreloadMapsFromURL(Settings.GetMapSourceFolderUrl());
 
         }
@@ -117,7 +109,7 @@ namespace CoD2WorldspawnConfigurator
 
         private void UpdateUI()
         {
-            lbl_loadedmapname.Text = "[No Map Selected]";
+            lbl_loadedmap.Text = loadedMap.Name;
             UpdateUIValues();
         }
 
@@ -135,11 +127,17 @@ namespace CoD2WorldspawnConfigurator
         {
             if(loadedMap != null)
             {
-                DialogResult result = MessageBox.Show($@"Are you sure you want to overwrite the worldspawn of {loadedMap.Name}?");
+                DialogResult result = MessageBox.Show($@"Are you sure you want to overwrite the worldspawn of {loadedMap.Name}?", "Caution", MessageBoxButtons.YesNo);
 
                 if (result == DialogResult.Yes)
                 {
-                    MessageBox.Show("Function Not Implemented");
+                    string worldspawnString = "";
+                    foreach (WorldspawnKeyVal keyVal in loadedMap.Worldspawn.GetWorldspawnKeyVals())
+                    {
+                        worldspawnString += $@"{keyVal.Key}: {keyVal.Value}{System.Environment.NewLine}";
+                    }
+                    MessageBox.Show("Saving map " + loadedMap.Name + " with worldspawn:\n" + worldspawnString);
+                    
                     // Save the map using MapHandler
                 }
                 else if (result == DialogResult.No)
@@ -185,42 +183,48 @@ namespace CoD2WorldspawnConfigurator
             }
         }
 
-        private void LoadMapValues(MapInfo map)
+        private void SetUIValues()
         {
-            // Map name
-            lbl_loadedmapname.Text = loadedMap.Name;
+            if (loadedMap == null) return;
 
-            // _color
-            string[] color_string = map.GetWorldspawnValue("_color").Value.Split(' ');
-            numeric_color_r.Value = int.Parse(color_string[0]);
-            numeric_color_g.Value = int.Parse(color_string[1]);
-            numeric_color_b.Value = int.Parse(color_string[2]);
+            Worldspawn w = loadedMap.Worldspawn;
 
-            // suncolor
-            string[] suncolor_string = map.GetWorldspawnValue("suncolor").Value.Split(' ');
-            numeric_suncolor_r.Value = int.Parse(suncolor_string[0]);
-            numeric_suncolor_g.Value = int.Parse(suncolor_string[1]);
-            numeric_suncolor_b.Value = int.Parse(suncolor_string[2]);
+            textBox1.Text = w.GetKeyVal("classname").Value;
 
-            // sundiffusecolor
-            string[] sundiffusecolor_string = map.GetWorldspawnValue("sundiffusecolor").Value.Split(' ');
-            numeric_sundiffusecolor_r.Value = int.Parse(sundiffusecolor_string[0]);
-            numeric_sundiffusecolor_g.Value = int.Parse(sundiffusecolor_string[1]);
-            numeric_sundiffusecolor_b.Value = int.Parse(sundiffusecolor_string[2]);
+            int maxRGB = 256;
+            int minRGB = 0;
 
-            // sundirection
-            string[] sundirection_string = map.GetWorldspawnValue("sundirection").Value.Split(' ');
-            numeric_sundirection_x.Value = int.Parse(sundirection_string[0]);
-            numeric_sundirection_y.Value = int.Parse(sundirection_string[1]);
-            numeric_sundirection_z.Value = int.Parse(sundirection_string[2]);
+            // TODO: NORMALISE RGB VALUES FROM MAX OF 1 TO 256
+            string[] colorVals = w.GetKeyVal("_color").Value.Split(' ');
+            //      z      = ( x – min(x)) / (max(x) – min(x)) * 100
+            // normalisedR = (256 - 0) / ()
 
-            // Sliders
-            slider_northyaw.Value = int.Parse(map.GetWorldspawnValue("northyaw").Value);
-            slider_ambient.Value = (int)float.Parse(map.GetWorldspawnValue("ambient").Value) * 100;
-            slider_diffusefraction.Value = (int)float.Parse(map.GetWorldspawnValue("diffusefraction").Value) * 100;
-            slider_sunlight.Value = (int)float.Parse(map.GetWorldspawnValue("sunlight").Value) * 100;
-            slider_contrastgain.Value = (int)float.Parse(map.GetWorldspawnValue("contrastgain").Value) * 100;
-            slider_bouncefraction.Value = (int)float.Parse(map.GetWorldspawnValue("bouncefraction").Value) * 100;
+
+            numeric_color_r.Value = int.Parse(colorVals[0]);
+            numeric_color_g.Value = int.Parse(colorVals[1]);
+            numeric_color_b.Value = int.Parse(colorVals[2]);
+
+            string[] sunColorVals = w.GetKeyVal("suncolor").Value.Split(' ');
+            numeric_suncolor_r.Value = int.Parse(sunColorVals[0]);
+            numeric_suncolor_g.Value = int.Parse(sunColorVals[1]);
+            numeric_suncolor_b.Value = int.Parse(sunColorVals[2]);
+
+            string[] sunDiffuseColorVals = w.GetKeyVal("sundiffusecolor").Value.Split(' ');
+            numeric_sundiffusecolor_r.Value = int.Parse(sunDiffuseColorVals[0]);
+            numeric_sundiffusecolor_g.Value = int.Parse(sunDiffuseColorVals[1]);
+            numeric_sundiffusecolor_b.Value = int.Parse(sunDiffuseColorVals[2]);
+
+            string[] sunDirectionVals = w.GetKeyVal("sundirection").Value.Split(' ');
+            numeric_sundirection_x.Value = int.Parse(sunDirectionVals[0]);
+            numeric_sundirection_y.Value = int.Parse(sunDirectionVals[1]);
+            numeric_sundirection_z.Value = int.Parse(sunDirectionVals[2]);
+
+            slider_ambient.Value = int.Parse(w.GetKeyVal("ambient").Value) * sliderMultiplier;
+            slider_northyaw.Value = int.Parse(w.GetKeyVal("northyaw").Value) * sliderMultiplier;
+            slider_diffusefraction.Value = int.Parse(w.GetKeyVal("diffusefraction").Value) * sliderMultiplier;
+            slider_sunlight.Value = int.Parse(w.GetKeyVal("sunlight").Value) * sliderMultiplier;
+            slider_contrastgain.Value = int.Parse(w.GetKeyVal("contrastgain").Value) * sliderMultiplier;
+            slider_bouncefraction.Value = int.Parse(w.GetKeyVal("bouncefraction").Value) * sliderMultiplier;
 
             UpdateUI();
         }
@@ -254,16 +258,18 @@ namespace CoD2WorldspawnConfigurator
                     {
                         string worldspawnString = "";
                 
-                        if (loadedMap.WorldspawnKeyVals.Count == 0) 
+                        if (loadedMap.Worldspawn.Count() == 0) 
                             worldspawnString = $@"No Worldspawn Found";
                         else 
                         { 
-                            foreach (WorldspawnKeyVal keyVal in loadedMap.WorldspawnKeyVals)
+                            foreach (WorldspawnKeyVal keyVal in loadedMap.Worldspawn.GetWorldspawnKeyVals())
                             {
                                 worldspawnString += $@"{keyVal.Key}, {keyVal.Value}{System.Environment.NewLine}";
                             }        
                         }    
-                        MessageBox.Show($@"This would load the values for {loadedMap.Name}{System.Environment.NewLine}{worldspawnString}");
+                        MessageBox.Show($@"Loading values for {loadedMap.Name}{System.Environment.NewLine}{worldspawnString}");
+
+                        SetUIValues();
                 
                     }
                 }

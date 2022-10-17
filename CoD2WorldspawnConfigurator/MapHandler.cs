@@ -46,8 +46,6 @@ namespace CoD2WorldspawnConfigurator
         //returns false if an error occurs
         public static List<WorldspawnKeyVal> GetWorldspawnSettings(string mapName)
         {
-            if (!mapName.StartsWith("mp_"))
-                return null;
             if (!MapExists(mapName))
                 return null;
 
@@ -82,7 +80,7 @@ namespace CoD2WorldspawnConfigurator
 
                         //northyaw 90
 
-                        string[] splitLine = currentLine.Split(' ');
+                        string[] splitLine = currentLine.Split(new char[] {' '}, 2, System.StringSplitOptions.None);
                         //northyaw ([0])
                         //90 ([1])
 
@@ -100,8 +98,6 @@ namespace CoD2WorldspawnConfigurator
 
         public static bool SaveWorldspawnSettings(string mapName, List<WorldspawnKeyVal> keyVals)
         {
-            if (!mapName.StartsWith("mp_"))
-                return false;
             if (!MapExists(mapName))
                 return false;
 
@@ -182,12 +178,7 @@ namespace CoD2WorldspawnConfigurator
             // package mapinfo with things
             MapInfo mapInfo = new MapInfo();
             mapInfo.Name = mapName;
-            mapInfo.WorldspawnKeyVals = GetWorldspawnSettings(mapName);
-
-            if (mapInfo.WorldspawnKeyVals == null)
-            {
-                mapInfo.WorldspawnKeyVals = new List<WorldspawnKeyVal>();
-            }
+            mapInfo.Worldspawn.SetWorldspawnKeyVals(GetWorldspawnSettings(mapName));
 
             return mapInfo;
         }

@@ -11,69 +11,38 @@ namespace CoD2WorldspawnConfigurator
     {
         public string FileURL { get; set; }
         public string Name { get; set; }
-        private List<WorldspawnKeyVal> worldspawnKeyVals;
-        public List<WorldspawnKeyVal> WorldspawnKeyVals { get { return worldspawnKeyVals; } set { worldspawnKeyVals = value; } }
-        public Worldspawn Worldspawn { get; set; }
+        
+        private Worldspawn worldspawn = new Worldspawn();
+        public Worldspawn Worldspawn { get { return worldspawn; } set { worldspawn = value; } }
 
         public MapInfo()
         {
-            WorldspawnKeyVals = new List<WorldspawnKeyVal>();
         }
 
-        public MapInfo(string fileURL)
+        public MapInfo(string fileURL, string name, Worldspawn ws)
         {
             FileURL = fileURL;
-            WorldspawnKeyVals = new List<WorldspawnKeyVal>();
-        }
-
-        private void LoadMapFile()
-        {
-            // use FileURL to get the map name and the current worldspawn settings if any
+            Name = name;
+            Worldspawn = ws;
         }
 
         public void InsertWorldspawnValue(WorldspawnKeyVal val)
         {
-            bool keyValExists = false;
-            foreach(WorldspawnKeyVal x in WorldspawnKeyVals)
-            {
-                if (x.Key == val.Key)
-                {
-                    keyValExists = true;
-                    x.Key = val.Key;
-                }
-                break;
-            }
-            if(!keyValExists)               
-                WorldspawnKeyVals.Add(val);
+            Worldspawn.InsertKeyVal(val);
+        }
+        public void InsertWorldspawnValue(string key, string value)
+        {
+            Worldspawn.InsertKeyVal(new WorldspawnKeyVal(key, value));
         }
 
         public void DeleteWorldspawnValue(string key)
         {
-            WorldspawnKeyVal foundKeyVal = null;
-            foreach (WorldspawnKeyVal x in WorldspawnKeyVals)
-            {
-                if (x.Key == key)
-                {
-                    foundKeyVal = x;
-                }
-                break;
-            }
-            if(foundKeyVal != null)
-                WorldspawnKeyVals.Remove(foundKeyVal);
+            Worldspawn.DeleteKeyVal(key);
         }
 
         public WorldspawnKeyVal GetWorldspawnValue(string key)
         {
-            foreach (WorldspawnKeyVal x in WorldspawnKeyVals)
-            {
-                if (x.Key == key)
-                {
-                    return x;
-                }
-            }
-            return null;
+            return Worldspawn.GetKeyVal(key);
         }
-
-
     }
 }
