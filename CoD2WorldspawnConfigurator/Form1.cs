@@ -279,14 +279,14 @@ namespace CoD2WorldspawnConfigurator
                 lbl_folderPath.Text = sourceFolderURL;
                 Settings.SaveMapSourceLocationToFile(sourceFolderURL);
                 SetButtonsEnabled(false);
+                loadedMap = null;
+                mapNames = MapHandler.GetAllMapNamesInFolder(sourceFolderURL).ToList();
+                LoadListBoxWithNames(mapNames);
             }
+            else if(result == DialogResult.Cancel)
+            {
 
-            // Get all maps from the chosen folder
-            loadedMap = null;
-            mapNames = MapHandler.GetAllMapNamesInFolder(sourceFolderURL).ToList();
-
-            LoadListBoxWithNames(mapNames);
-               
+            }               
         }
 
         private void LoadListBoxWithNames(List<string> names)
@@ -347,7 +347,7 @@ namespace CoD2WorldspawnConfigurator
 
         private void btn_default_Click(object sender, EventArgs e)
         {
-
+            SetUIValues();
         }
 
         private void listBox_MapList_SelectedIndexChanged(object sender, EventArgs e)

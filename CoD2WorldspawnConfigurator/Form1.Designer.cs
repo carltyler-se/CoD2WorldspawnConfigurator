@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lbl_northyaw = new System.Windows.Forms.Label();
             this.lbl_color = new System.Windows.Forms.Label();
             this.lbl_ambient = new System.Windows.Forms.Label();
@@ -851,6 +852,7 @@
             this.Controls.Add(this.lbl_loadedmapname);
             this.Controls.Add(this.grpbox_worldspawn);
             this.Controls.Add(this.lbl_loadedmap);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "CoD2 Worldspawn Configurator";
             this.Load += new System.EventHandler(this.Form1_Load);
