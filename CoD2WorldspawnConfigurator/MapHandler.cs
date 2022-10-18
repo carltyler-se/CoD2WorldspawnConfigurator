@@ -13,13 +13,15 @@ namespace CoD2WorldspawnConfigurator
         private static string mapSourceFolder = "";
         private static readonly string mapExtension = ".map";
 
-        // TODO: WORLDSPAWN DOESNT LOAD WHEN SELECTING IN LISTBOX
-        //       POSSIBLY DOWN TO MAPSOURCEFOLDER 
-
         public static void SetMapSourceFolder(string path)
         {
             mapSourceFolder = path;
             if (!mapSourceFolder.EndsWith("\\")) { mapSourceFolder += "\\"; }
+        }
+
+        public static string GetMapSourceFolder()
+        {
+            return mapSourceFolder;
         }
 
         public static bool MapExists(string mapName)
@@ -74,17 +76,7 @@ namespace CoD2WorldspawnConfigurator
 
                         if (currentLine.StartsWith($@"//")) break;
 
-                        //"northyaw" "90"
-
-                        currentLine = currentLine.Replace("\"", string.Empty);
-
-                        //northyaw 90
-
-                        string[] splitLine = currentLine.Split(new char[] {' '}, 2, System.StringSplitOptions.None);
-                        //northyaw ([0])
-                        //90 ([1])
-
-                        fetchedKeyVals.Add(new WorldspawnKeyVal(splitLine[0], splitLine[1]));
+                        fetchedKeyVals.Add(ParseLine(currentLine));
                     }
                 }
             }
@@ -96,12 +88,25 @@ namespace CoD2WorldspawnConfigurator
             return fetchedKeyVals;
         }
 
+        private static WorldspawnKeyVal ParseLine(string line)
+        {
+            line = line.Replace("\"", string.Empty);
+
+            //northyaw 90
+
+            string[] splitLine = line.Split(new char[] { ' ' }, 2, System.StringSplitOptions.None);
+            //northyaw ([0])
+            //90 ([1])
+            return new WorldspawnKeyVal(splitLine[0], splitLine[1]);
+        }
+
         public static bool SaveWorldspawnSettings(string mapName, List<WorldspawnKeyVal> keyVals)
         {
             if (!MapExists(mapName))
                 return false;
 
             List<string> allLines = new List<string>();
+            List<WorldspawnKeyVal> isolatedKeyVals = new List<WorldspawnKeyVal>();
 
             string currentLine = "";
 
@@ -109,7 +114,7 @@ namespace CoD2WorldspawnConfigurator
 
             try
             {
-                using(StreamReader reader = new StreamReader(mapSourceFolder + mapName + mapExtension))
+                using(StreamReader reader = new StreamReader(mapSourceFolder + mapName))
                 {
                     while (!reader.EndOfStream)
                     {
@@ -122,29 +127,64 @@ namespace CoD2WorldspawnConfigurator
                 return false;
             }
 
+            int postWorldspawnIndex = 0;
 
-            // ALTER WORLDSPAWN HERE
 
-            int worldspawnStartIndex = 0;
-            int worldspawnLastIndex = 0;
-            for (int i = 0; i < allLines.Count; i++)
+            // Isolate worldspawn lines from allLines
+            // Start at position 3 of the lines to skip first 3 lines of file
+            // and loop until next line contains comments (eg. // brush 0)
+            for (int i = 3; i < allLines.Count; i++)
             {
-                if (allLines[i] == $@"// entity 0")
+                if (allLines[i].StartsWith("//"))
                 {
-                    i += 1;
+                    postWorldspawnIndex = i;
+                    break;
                 }
-
+                isolatedKeyVals.Add(ParseLine(allLines[i]));
             }
-            // ---------------------
+
+            List<WorldspawnKeyVal> newKeyVals = new List<WorldspawnKeyVal>();
+
+            foreach(WorldspawnKeyVal keyVal in keyVals)
+            {
+                bool kvFound = false;
+                foreach(WorldspawnKeyVal isolatedKV in isolatedKeyVals)
+                {
+                    if(keyVal.Key == isolatedKV.Key)
+                    {
+                        isolatedKV.Value = keyVal.Value;
+                        kvFound = true;
+                        break;
+                    }
+                }
+                if(!kvFound)
+                {
+                    newKeyVals.Add(keyVal);
+                }
+            }
+            // Add the keyvals that did not already exist to the old ones
+            isolatedKeyVals.AddRange(newKeyVals);
+
 
             // Write lines back to file
             try
             {
-                using (StreamWriter writer = new StreamWriter(mapSourceFolder + mapName + mapExtension))
+                using (StreamWriter writer = new StreamWriter(mapSourceFolder + "Edited version of " + mapName))
                 {
-                    foreach(string line in allLines)
+                    //write the first 3 lines first
+                    for(int i = 0; i < 3; i++)
                     {
-                        writer.WriteLine(line);
+                        writer.WriteLine(allLines[i]);
+                    }
+                    // write the worldspawns
+                    foreach(WorldspawnKeyVal keyVal in isolatedKeyVals)
+                    {
+                        writer.WriteLine(keyVal.ToString());
+                    }
+                    // write the remaining lines
+                    for(int i = postWorldspawnIndex; i < allLines.Count; i++)
+                    {
+                        writer.WriteLine(allLines[i]);
                     }
                 }
             }

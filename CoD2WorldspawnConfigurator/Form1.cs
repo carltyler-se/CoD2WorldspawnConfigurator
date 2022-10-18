@@ -15,7 +15,7 @@ namespace CoD2WorldspawnConfigurator
     {
         string sourceFolderURL = "";
         List<string> mapNames = new List<string>();
-        MapInfo loadedMap = new MapInfo();
+        MapInfo loadedMap = null;
 
         decimal sliderMultiplier = 100;
 
@@ -24,7 +24,15 @@ namespace CoD2WorldspawnConfigurator
             InitializeComponent();
             Settings.SettingsFileLocation = Directory.GetCurrentDirectory() + "\\settings.ini";
             MapHandler.SetMapSourceFolder(Settings.GetMapSourceFolderUrl());
-            PreloadMapsFromURL(Settings.GetMapSourceFolderUrl());
+            
+            if(Directory.Exists(Settings.GetMapSourceFolderUrl()))
+            {
+                PreloadMapsFromURL(Settings.GetMapSourceFolderUrl());
+            }
+            else 
+            {
+                mapNames = new List<string>();
+            }
 
         }
 
@@ -34,6 +42,7 @@ namespace CoD2WorldspawnConfigurator
             sourceFolderURL = url;
             mapNames = MapHandler.GetAllMapNamesInFolder(sourceFolderURL).ToList();
             LoadListBoxWithNames(mapNames);
+            lbl_folderPath.Text = Settings.GetMapSourceFolderUrl();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -109,18 +118,18 @@ namespace CoD2WorldspawnConfigurator
 
         private void UpdateUI()
         {
-            lbl_loadedmap.Text = loadedMap.Name;
+            lbl_loadedmapname.Text = loadedMap.Name;
             UpdateUIValues();
         }
 
         private void UpdateUIValues()
         {
             lbl_northyaw_value.Text = slider_northyaw.Value.ToString();
-            lbl_ambient_value.Text = slider_ambient.Value.ToString();
-            lbl_diffusefraction_value.Text = slider_diffusefraction.Value.ToString();
-            lbl_sunlight_value.Text = slider_sunlight.Value.ToString();
-            lbl_contrastgain_value.Text = slider_contrastgain.Value.ToString();
-            lbl_bouncefraction_value.Text = slider_bouncefraction.Value.ToString();
+            lbl_ambient_value.Text = (slider_ambient.Value / sliderMultiplier).ToString();
+            lbl_diffusefraction_value.Text = (slider_diffusefraction.Value / sliderMultiplier).ToString();
+            lbl_sunlight_value.Text = (slider_sunlight.Value / sliderMultiplier).ToString();
+            lbl_contrastgain_value.Text = (slider_contrastgain.Value / sliderMultiplier).ToString();
+            lbl_bouncefraction_value.Text = (slider_bouncefraction.Value / sliderMultiplier).ToString();
         }
 
         private void btn_save_Click(object sender, EventArgs e)
@@ -131,22 +140,41 @@ namespace CoD2WorldspawnConfigurator
 
                 if (result == DialogResult.Yes)
                 {
-                    string worldspawnString = "";
-                    foreach (WorldspawnKeyVal keyVal in loadedMap.Worldspawn.GetWorldspawnKeyVals())
-                    {
-                        worldspawnString += $@"{keyVal.Key}: {keyVal.Value}{System.Environment.NewLine}";
-                    }
-                    MessageBox.Show("Saving map " + loadedMap.Name + " with worldspawn:\n" + worldspawnString);
-                    
+                    // Extract the values from the UI
+                    loadedMap.Worldspawn = GetWorldspawnFromUI();
+
                     // Save the map using MapHandler
+                    MapHandler.SaveWorldspawnSettings(loadedMap.Name, loadedMap.Worldspawn.GetWorldspawnKeyVals());
                 }
-                else if (result == DialogResult.No)
-                {
-                    // Reloaded the maps current worldspawn
-                }
+
+                //Refresh the map list
+                int previousSelectionIndex = listBox_MapList.SelectedIndex;
+                mapNames = MapHandler.GetAllMapNamesInFolder(sourceFolderURL).ToList();
+                LoadListBoxWithNames(mapNames);
+                listBox_MapList.SelectedIndex = previousSelectionIndex;
+                SetUIValues();
             }
         }
 
+        private Worldspawn GetWorldspawnFromUI()
+        {
+            Worldspawn ws = new Worldspawn();
+
+            ws.InsertKeyVal(new WorldspawnKeyVal("classname", "worldspawn"));
+            ws.InsertKeyVal(new WorldspawnKeyVal("northyaw", $@"{slider_northyaw.Value}"));
+            ws.InsertKeyVal(new WorldspawnKeyVal("_color", $@"{numeric_color_r.Value} {numeric_color_g.Value} {numeric_color_b.Value}"));
+            ws.InsertKeyVal(new WorldspawnKeyVal("ambient", $@"{slider_ambient.Value / sliderMultiplier}"));
+            ws.InsertKeyVal(new WorldspawnKeyVal("diffusefraction", $@"{slider_diffusefraction.Value / sliderMultiplier}"));
+            ws.InsertKeyVal(new WorldspawnKeyVal("suncolor", $@"{numeric_suncolor_r.Value} {numeric_suncolor_g.Value} {numeric_suncolor_b.Value}"));
+            ws.InsertKeyVal(new WorldspawnKeyVal("sundiffusecolor", $@"{numeric_sundiffusecolor_r.Value} {numeric_sundiffusecolor_g.Value} {numeric_sundiffusecolor_b.Value}"));
+            ws.InsertKeyVal(new WorldspawnKeyVal("sunlight", $@"{slider_sunlight.Value / sliderMultiplier}"));
+            ws.InsertKeyVal(new WorldspawnKeyVal("sundirection", $@"{numeric_sundirection_x.Value} {numeric_sundirection_y.Value} {numeric_sundirection_z.Value}"));
+            ws.InsertKeyVal(new WorldspawnKeyVal("contrastgain", $@"{slider_contrastgain.Value / sliderMultiplier}"));
+            ws.InsertKeyVal(new WorldspawnKeyVal("bouncefraction", $@"{slider_bouncefraction.Value / sliderMultiplier}"));
+
+            return ws;
+
+        }
 
         private void btn_load_Click(object sender, EventArgs e)
         {

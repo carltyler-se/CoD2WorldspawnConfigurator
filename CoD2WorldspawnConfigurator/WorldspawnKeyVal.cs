@@ -15,5 +15,9 @@ namespace CoD2WorldspawnConfigurator
             Key = key;
             Value = val;
         }
+        public override string ToString()
+        {
+            return "\"" + Key + "\"" + " " + "\"" + Value + "\"";
+        }
     }
 }
