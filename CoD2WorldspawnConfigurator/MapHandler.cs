@@ -169,7 +169,7 @@ namespace CoD2WorldspawnConfigurator
             // Write lines back to file
             try
             {
-                using (StreamWriter writer = new StreamWriter(mapSourceFolder + "Edited version of " + mapName))
+                using (StreamWriter writer = new StreamWriter(mapSourceFolder + mapName))
                 {
                     //write the first 3 lines first
                     for(int i = 0; i < 3; i++)

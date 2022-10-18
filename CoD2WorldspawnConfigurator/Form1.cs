@@ -26,14 +26,92 @@ namespace CoD2WorldspawnConfigurator
             MapHandler.SetMapSourceFolder(Settings.GetMapSourceFolderUrl());
             
             if(Directory.Exists(Settings.GetMapSourceFolderUrl()))
-            {
                 PreloadMapsFromURL(Settings.GetMapSourceFolderUrl());
-            }
             else 
-            {
                 mapNames = new List<string>();
-            }
 
+            AddToolTips();
+
+        }
+
+        private void AddToolTips()
+        {
+            ToolTip toolTipClassname = new ToolTip();
+            toolTipClassname.ToolTipIcon = ToolTipIcon.Info;
+            toolTipClassname.IsBalloon = true;
+            toolTipClassname.ShowAlways = false;
+            toolTipClassname.ToolTipTitle = "Classname";
+            toolTipClassname.SetToolTip(lbl_classname, WorldspawnDescription.Classname);
+
+            ToolTip toolTipNorthyaw = new ToolTip();
+            toolTipNorthyaw.ToolTipIcon = ToolTipIcon.Info;
+            toolTipNorthyaw.IsBalloon = true;
+            toolTipNorthyaw.ShowAlways = false;
+            toolTipNorthyaw.ToolTipTitle = "Northyaw";
+            toolTipNorthyaw.SetToolTip(lbl_northyaw, WorldspawnDescription.Northyaw);
+
+            ToolTip toolTipColor = new ToolTip();
+            toolTipColor.ToolTipIcon = ToolTipIcon.Info;
+            toolTipColor.IsBalloon = true;
+            toolTipColor.ShowAlways = false;
+            toolTipColor.ToolTipTitle = "Color";
+            toolTipColor.SetToolTip(lbl_color, WorldspawnDescription.Color);
+
+            ToolTip toolTipAmbient = new ToolTip();
+            toolTipAmbient.ToolTipIcon = ToolTipIcon.Info;
+            toolTipAmbient.IsBalloon = true;
+            toolTipAmbient.ShowAlways = false;
+            toolTipAmbient.ToolTipTitle = "Ambient";
+            toolTipAmbient.SetToolTip(lbl_ambient, WorldspawnDescription.Ambient);
+
+            ToolTip toolTipDiffuseFraction = new ToolTip();
+            toolTipDiffuseFraction.ToolTipIcon = ToolTipIcon.Info;
+            toolTipDiffuseFraction.IsBalloon = true;
+            toolTipDiffuseFraction.ShowAlways = false;
+            toolTipDiffuseFraction.ToolTipTitle = "Diffuse Fraction";
+            toolTipDiffuseFraction.SetToolTip(lbl_diffusefraction, WorldspawnDescription.DiffuseFraction);
+
+            ToolTip toolTipSunColor = new ToolTip();
+            toolTipSunColor.ToolTipIcon = ToolTipIcon.Info;
+            toolTipSunColor.IsBalloon = true;
+            toolTipSunColor.ShowAlways = false;
+            toolTipSunColor.ToolTipTitle = "Sun Color";
+            toolTipSunColor.SetToolTip(lbl_suncolor, WorldspawnDescription.SunColor);
+
+            ToolTip toolTipSunDiffuseColor = new ToolTip();
+            toolTipSunDiffuseColor.ToolTipIcon = ToolTipIcon.Info;
+            toolTipSunDiffuseColor.IsBalloon = true;
+            toolTipSunDiffuseColor.ShowAlways = false;
+            toolTipSunDiffuseColor.ToolTipTitle = "Sun Diffuse Color";
+            toolTipSunDiffuseColor.SetToolTip(lbl_sundiffusecolor, WorldspawnDescription.SunDiffuseColor);
+
+            ToolTip toolTipSunlight = new ToolTip();
+            toolTipSunlight.ToolTipIcon = ToolTipIcon.Info;
+            toolTipSunlight.IsBalloon = true;
+            toolTipSunlight.ShowAlways = false;
+            toolTipSunlight.ToolTipTitle = "Sunlight";
+            toolTipSunlight.SetToolTip(lbl_sunlight, WorldspawnDescription.Sunlight);
+
+            ToolTip toolTipSunDirection = new ToolTip();
+            toolTipSunDirection.ToolTipIcon = ToolTipIcon.Info;
+            toolTipSunDirection.IsBalloon = true;
+            toolTipSunDirection.ShowAlways = false;
+            toolTipSunDirection.ToolTipTitle = "Sun Direction";
+            toolTipSunDirection.SetToolTip(lbl_sundirection, WorldspawnDescription.SunDirection);
+
+            ToolTip toolTipContrastGain = new ToolTip();
+            toolTipContrastGain.ToolTipIcon = ToolTipIcon.Info;
+            toolTipContrastGain.IsBalloon = true;
+            toolTipContrastGain.ShowAlways = false;
+            toolTipContrastGain.ToolTipTitle = "Contrast Gain";
+            toolTipContrastGain.SetToolTip(lbl_contrastgain, WorldspawnDescription.ContrastGain);
+
+            ToolTip toolTipBounceFraction = new ToolTip();
+            toolTipBounceFraction.ToolTipIcon = ToolTipIcon.Info;
+            toolTipBounceFraction.IsBalloon = true;
+            toolTipBounceFraction.ShowAlways = false;
+            toolTipBounceFraction.ToolTipTitle = "Bounce Fraction";
+            toolTipBounceFraction.SetToolTip(lbl_bouncefraction, WorldspawnDescription.BounceFraction);
         }
 
         private void PreloadMapsFromURL(string url)
@@ -132,6 +210,18 @@ namespace CoD2WorldspawnConfigurator
             lbl_bouncefraction_value.Text = (slider_bouncefraction.Value / sliderMultiplier).ToString();
         }
 
+        private void SetButtonsEnabled(bool val)
+        {
+            btn_save.Enabled = val;
+            btn_default.Enabled = val;
+        }
+
+        private void ToggleButtonsEnabled()
+        {
+            btn_save.Enabled = !btn_save.Enabled;
+            btn_default.Enabled = !btn_default.Enabled;
+        }
+
         private void btn_save_Click(object sender, EventArgs e)
         {
             if(loadedMap != null)
@@ -188,6 +278,7 @@ namespace CoD2WorldspawnConfigurator
                 sourceFolderURL = browser.SelectedPath;
                 lbl_folderPath.Text = sourceFolderURL;
                 Settings.SaveMapSourceLocationToFile(sourceFolderURL);
+                SetButtonsEnabled(false);
             }
 
             // Get all maps from the chosen folder
@@ -265,6 +356,7 @@ namespace CoD2WorldspawnConfigurator
             loadedMap = null;
             if(listBox_MapList.SelectedIndex != -1)
             {
+
                 if (mapNames[listBox_MapList.SelectedIndex] != null)
                     chosenMapURL = mapNames[listBox_MapList.SelectedIndex];
                 else 
@@ -287,13 +379,13 @@ namespace CoD2WorldspawnConfigurator
                                 worldspawnString += $@"{keyVal.Key}, {keyVal.Value}{System.Environment.NewLine}";
                             }        
                         }
-
-                        SetUIValues();
-                
+                        SetButtonsEnabled(true);
+                        SetUIValues();           
                     }
                 }
 
             }
+            else { SetButtonsEnabled(false); }
 
         }
     }

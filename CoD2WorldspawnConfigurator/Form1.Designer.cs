@@ -41,7 +41,7 @@
             this.grpbox_worldspawn = new System.Windows.Forms.GroupBox();
             this.lbl_bouncefraction_value = new System.Windows.Forms.Label();
             this.slider_bouncefraction = new System.Windows.Forms.TrackBar();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbl_bouncefraction = new System.Windows.Forms.Label();
             this.lbl_contrastgain_value = new System.Windows.Forms.Label();
             this.numeric_sundirection_z = new System.Windows.Forms.NumericUpDown();
             this.slider_contrastgain = new System.Windows.Forms.TrackBar();
@@ -79,8 +79,6 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.lbl_loadedmapname = new System.Windows.Forms.Label();
             this.lbl_loadedmap = new System.Windows.Forms.Label();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.colorDialog2 = new System.Windows.Forms.ColorDialog();
             this.btn_load = new System.Windows.Forms.Button();
             this.btn_save = new System.Windows.Forms.Button();
             this.listBox_MapList = new System.Windows.Forms.ListBox();
@@ -212,7 +210,7 @@
             // 
             this.grpbox_worldspawn.Controls.Add(this.lbl_bouncefraction_value);
             this.grpbox_worldspawn.Controls.Add(this.slider_bouncefraction);
-            this.grpbox_worldspawn.Controls.Add(this.label1);
+            this.grpbox_worldspawn.Controls.Add(this.lbl_bouncefraction);
             this.grpbox_worldspawn.Controls.Add(this.lbl_contrastgain_value);
             this.grpbox_worldspawn.Controls.Add(this.numeric_sundirection_z);
             this.grpbox_worldspawn.Controls.Add(this.slider_contrastgain);
@@ -263,7 +261,7 @@
             this.grpbox_worldspawn.Size = new System.Drawing.Size(473, 539);
             this.grpbox_worldspawn.TabIndex = 10;
             this.grpbox_worldspawn.TabStop = false;
-            this.grpbox_worldspawn.Text = "worldspawn";
+            this.grpbox_worldspawn.Text = "Worldspawn";
             this.grpbox_worldspawn.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // lbl_bouncefraction_value
@@ -287,15 +285,15 @@
             this.slider_bouncefraction.TickStyle = System.Windows.Forms.TickStyle.None;
             this.slider_bouncefraction.Scroll += new System.EventHandler(this.slider_bouncefraction_Scroll);
             // 
-            // label1
+            // lbl_bouncefraction
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label1.Location = new System.Drawing.Point(16, 499);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(137, 20);
-            this.label1.TabIndex = 37;
-            this.label1.Text = "Bounce Fraction:";
+            this.lbl_bouncefraction.AutoSize = true;
+            this.lbl_bouncefraction.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.lbl_bouncefraction.Location = new System.Drawing.Point(16, 499);
+            this.lbl_bouncefraction.Name = "lbl_bouncefraction";
+            this.lbl_bouncefraction.Size = new System.Drawing.Size(137, 20);
+            this.lbl_bouncefraction.TabIndex = 37;
+            this.lbl_bouncefraction.Text = "Bounce Fraction:";
             // 
             // lbl_contrastgain_value
             // 
@@ -799,6 +797,7 @@
             // 
             // btn_save
             // 
+            this.btn_save.Enabled = false;
             this.btn_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
             this.btn_save.Location = new System.Drawing.Point(623, 12);
             this.btn_save.Name = "btn_save";
@@ -820,19 +819,20 @@
             // 
             // btn_default
             // 
+            this.btn_default.Enabled = false;
             this.btn_default.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btn_default.Location = new System.Drawing.Point(491, 12);
+            this.btn_default.Location = new System.Drawing.Point(511, 12);
             this.btn_default.Name = "btn_default";
-            this.btn_default.Size = new System.Drawing.Size(126, 34);
+            this.btn_default.Size = new System.Drawing.Size(106, 34);
             this.btn_default.TabIndex = 37;
-            this.btn_default.Text = "Revert To Default";
+            this.btn_default.Text = "Revert";
             this.btn_default.UseVisualStyleBackColor = true;
             this.btn_default.Click += new System.EventHandler(this.btn_default_Click);
             // 
             // lbl_folderPath
             // 
             this.lbl_folderPath.AutoSize = true;
-            this.lbl_folderPath.Location = new System.Drawing.Point(13, 51);
+            this.lbl_folderPath.Location = new System.Drawing.Point(9, 50);
             this.lbl_folderPath.Name = "lbl_folderPath";
             this.lbl_folderPath.Size = new System.Drawing.Size(98, 13);
             this.lbl_folderPath.TabIndex = 38;
@@ -894,8 +894,6 @@
         private System.Windows.Forms.GroupBox grpbox_worldspawn;
         private System.Windows.Forms.TrackBar slider_northyaw;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.ColorDialog colorDialog2;
         private System.Windows.Forms.Label lbl_ambient_value;
         private System.Windows.Forms.TrackBar slider_ambient;
         private System.Windows.Forms.Label lbl_northyaw_value;
@@ -935,7 +933,7 @@
         private System.Windows.Forms.Button btn_save;
         private System.Windows.Forms.Label lbl_bouncefraction_value;
         private System.Windows.Forms.TrackBar slider_bouncefraction;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbl_bouncefraction;
         private System.Windows.Forms.ListBox listBox_MapList;
         private System.Windows.Forms.Button btn_default;
         private System.Windows.Forms.Label lbl_folderPath;
