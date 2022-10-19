@@ -421,5 +421,10 @@ namespace CoD2WorldspawnConfigurator
             }
             else { SetButtonsEnabled(false); }
         }
+
+        private void btn_copyfrom_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

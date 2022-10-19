@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CoD2WorldspawnConfigurator
 {
 
-    internal class MapInfo
+    public class MapInfo
     {
         public string FileURL { get; set; }
         public string Name { get; set; }

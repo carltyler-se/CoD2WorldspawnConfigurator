@@ -87,6 +87,7 @@
             this.lbl_folderPath = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.btn_copyfrom = new System.Windows.Forms.Button();
             this.grpbox_worldspawn.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_bouncefraction)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_sundirection_z)).BeginInit();
@@ -122,7 +123,7 @@
             // 
             this.lbl_color.AutoSize = true;
             this.lbl_color.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_color.Location = new System.Drawing.Point(99, 114);
+            this.lbl_color.Location = new System.Drawing.Point(99, 110);
             this.lbl_color.Name = "lbl_color";
             this.lbl_color.Size = new System.Drawing.Size(54, 20);
             this.lbl_color.TabIndex = 1;
@@ -132,7 +133,7 @@
             // 
             this.lbl_ambient.AutoSize = true;
             this.lbl_ambient.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_ambient.Location = new System.Drawing.Point(78, 162);
+            this.lbl_ambient.Location = new System.Drawing.Point(78, 155);
             this.lbl_ambient.Name = "lbl_ambient";
             this.lbl_ambient.Size = new System.Drawing.Size(75, 20);
             this.lbl_ambient.TabIndex = 2;
@@ -153,7 +154,7 @@
             // 
             this.lbl_suncolor.AutoSize = true;
             this.lbl_suncolor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_suncolor.Location = new System.Drawing.Point(68, 258);
+            this.lbl_suncolor.Location = new System.Drawing.Point(68, 255);
             this.lbl_suncolor.Name = "lbl_suncolor";
             this.lbl_suncolor.Size = new System.Drawing.Size(88, 20);
             this.lbl_suncolor.TabIndex = 4;
@@ -163,7 +164,7 @@
             // 
             this.lbl_sundiffusecolor.AutoSize = true;
             this.lbl_sundiffusecolor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_sundiffusecolor.Location = new System.Drawing.Point(9, 311);
+            this.lbl_sundiffusecolor.Location = new System.Drawing.Point(9, 308);
             this.lbl_sundiffusecolor.Name = "lbl_sundiffusecolor";
             this.lbl_sundiffusecolor.Size = new System.Drawing.Size(147, 20);
             this.lbl_sundiffusecolor.TabIndex = 5;
@@ -173,7 +174,7 @@
             // 
             this.lbl_contrastgain.AutoSize = true;
             this.lbl_contrastgain.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_contrastgain.Location = new System.Drawing.Point(35, 450);
+            this.lbl_contrastgain.Location = new System.Drawing.Point(35, 447);
             this.lbl_contrastgain.Name = "lbl_contrastgain";
             this.lbl_contrastgain.Size = new System.Drawing.Size(118, 20);
             this.lbl_contrastgain.TabIndex = 6;
@@ -183,7 +184,7 @@
             // 
             this.lbl_sundirection.AutoSize = true;
             this.lbl_sundirection.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_sundirection.Location = new System.Drawing.Point(37, 403);
+            this.lbl_sundirection.Location = new System.Drawing.Point(37, 400);
             this.lbl_sundirection.Name = "lbl_sundirection";
             this.lbl_sundirection.Size = new System.Drawing.Size(116, 20);
             this.lbl_sundirection.TabIndex = 7;
@@ -193,7 +194,7 @@
             // 
             this.lbl_diffusefraction.AutoSize = true;
             this.lbl_diffusefraction.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_diffusefraction.Location = new System.Drawing.Point(22, 209);
+            this.lbl_diffusefraction.Location = new System.Drawing.Point(22, 206);
             this.lbl_diffusefraction.Name = "lbl_diffusefraction";
             this.lbl_diffusefraction.Size = new System.Drawing.Size(134, 20);
             this.lbl_diffusefraction.TabIndex = 8;
@@ -203,7 +204,7 @@
             // 
             this.lbl_sunlight.AutoSize = true;
             this.lbl_sunlight.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_sunlight.Location = new System.Drawing.Point(81, 355);
+            this.lbl_sunlight.Location = new System.Drawing.Point(81, 352);
             this.lbl_sunlight.Name = "lbl_sunlight";
             this.lbl_sunlight.Size = new System.Drawing.Size(74, 20);
             this.lbl_sunlight.TabIndex = 9;
@@ -271,7 +272,7 @@
             // 
             this.lbl_bouncefraction_value.AutoSize = true;
             this.lbl_bouncefraction_value.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.lbl_bouncefraction_value.Location = new System.Drawing.Point(427, 502);
+            this.lbl_bouncefraction_value.Location = new System.Drawing.Point(427, 499);
             this.lbl_bouncefraction_value.Name = "lbl_bouncefraction_value";
             this.lbl_bouncefraction_value.Size = new System.Drawing.Size(16, 17);
             this.lbl_bouncefraction_value.TabIndex = 39;
@@ -280,7 +281,7 @@
             // slider_bouncefraction
             // 
             this.slider_bouncefraction.LargeChange = 1;
-            this.slider_bouncefraction.Location = new System.Drawing.Point(159, 499);
+            this.slider_bouncefraction.Location = new System.Drawing.Point(159, 496);
             this.slider_bouncefraction.Maximum = 100;
             this.slider_bouncefraction.Name = "slider_bouncefraction";
             this.slider_bouncefraction.Size = new System.Drawing.Size(262, 45);
@@ -292,7 +293,7 @@
             // 
             this.lbl_bouncefraction.AutoSize = true;
             this.lbl_bouncefraction.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_bouncefraction.Location = new System.Drawing.Point(16, 499);
+            this.lbl_bouncefraction.Location = new System.Drawing.Point(16, 496);
             this.lbl_bouncefraction.Name = "lbl_bouncefraction";
             this.lbl_bouncefraction.Size = new System.Drawing.Size(137, 20);
             this.lbl_bouncefraction.TabIndex = 37;
@@ -302,7 +303,7 @@
             // 
             this.lbl_contrastgain_value.AutoSize = true;
             this.lbl_contrastgain_value.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.lbl_contrastgain_value.Location = new System.Drawing.Point(427, 453);
+            this.lbl_contrastgain_value.Location = new System.Drawing.Point(427, 450);
             this.lbl_contrastgain_value.Name = "lbl_contrastgain_value";
             this.lbl_contrastgain_value.Size = new System.Drawing.Size(16, 17);
             this.lbl_contrastgain_value.TabIndex = 31;
@@ -311,7 +312,7 @@
             // numeric_sundirection_z
             // 
             this.numeric_sundirection_z.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.numeric_sundirection_z.Location = new System.Drawing.Point(381, 403);
+            this.numeric_sundirection_z.Location = new System.Drawing.Point(381, 400);
             this.numeric_sundirection_z.Maximum = new decimal(new int[] {
             0,
             0,
@@ -325,7 +326,7 @@
             // slider_contrastgain
             // 
             this.slider_contrastgain.LargeChange = 1;
-            this.slider_contrastgain.Location = new System.Drawing.Point(159, 450);
+            this.slider_contrastgain.Location = new System.Drawing.Point(159, 447);
             this.slider_contrastgain.Maximum = 200;
             this.slider_contrastgain.Name = "slider_contrastgain";
             this.slider_contrastgain.Size = new System.Drawing.Size(262, 45);
@@ -336,7 +337,7 @@
             // numeric_sundirection_y
             // 
             this.numeric_sundirection_y.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.numeric_sundirection_y.Location = new System.Drawing.Point(284, 403);
+            this.numeric_sundirection_y.Location = new System.Drawing.Point(284, 400);
             this.numeric_sundirection_y.Maximum = new decimal(new int[] {
             359,
             0,
@@ -355,7 +356,7 @@
             // numeric_sundirection_x
             // 
             this.numeric_sundirection_x.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.numeric_sundirection_x.Location = new System.Drawing.Point(188, 403);
+            this.numeric_sundirection_x.Location = new System.Drawing.Point(188, 400);
             this.numeric_sundirection_x.Maximum = new decimal(new int[] {
             359,
             0,
@@ -375,7 +376,7 @@
             // 
             this.lbl_sundirection_z.AutoSize = true;
             this.lbl_sundirection_z.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_sundirection_z.Location = new System.Drawing.Point(353, 403);
+            this.lbl_sundirection_z.Location = new System.Drawing.Point(353, 400);
             this.lbl_sundirection_z.Name = "lbl_sundirection_z";
             this.lbl_sundirection_z.Size = new System.Drawing.Size(23, 20);
             this.lbl_sundirection_z.TabIndex = 32;
@@ -385,7 +386,7 @@
             // 
             this.lbl_sundirection_y.AutoSize = true;
             this.lbl_sundirection_y.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_sundirection_y.Location = new System.Drawing.Point(256, 403);
+            this.lbl_sundirection_y.Location = new System.Drawing.Point(256, 400);
             this.lbl_sundirection_y.Name = "lbl_sundirection_y";
             this.lbl_sundirection_y.Size = new System.Drawing.Size(24, 20);
             this.lbl_sundirection_y.TabIndex = 31;
@@ -395,7 +396,7 @@
             // 
             this.lbl_sundirection_x.AutoSize = true;
             this.lbl_sundirection_x.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_sundirection_x.Location = new System.Drawing.Point(161, 403);
+            this.lbl_sundirection_x.Location = new System.Drawing.Point(161, 400);
             this.lbl_sundirection_x.Name = "lbl_sundirection_x";
             this.lbl_sundirection_x.Size = new System.Drawing.Size(25, 20);
             this.lbl_sundirection_x.TabIndex = 30;
@@ -405,7 +406,7 @@
             // 
             this.lbl_sunlight_value.AutoSize = true;
             this.lbl_sunlight_value.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.lbl_sunlight_value.Location = new System.Drawing.Point(427, 358);
+            this.lbl_sunlight_value.Location = new System.Drawing.Point(427, 355);
             this.lbl_sunlight_value.Name = "lbl_sunlight_value";
             this.lbl_sunlight_value.Size = new System.Drawing.Size(16, 17);
             this.lbl_sunlight_value.TabIndex = 29;
@@ -414,7 +415,7 @@
             // slider_sunlight
             // 
             this.slider_sunlight.LargeChange = 1;
-            this.slider_sunlight.Location = new System.Drawing.Point(159, 355);
+            this.slider_sunlight.Location = new System.Drawing.Point(159, 352);
             this.slider_sunlight.Maximum = 200;
             this.slider_sunlight.Name = "slider_sunlight";
             this.slider_sunlight.Size = new System.Drawing.Size(262, 45);
@@ -431,7 +432,7 @@
             0,
             0,
             131072});
-            this.numeric_sundiffusecolor_b.Location = new System.Drawing.Point(381, 308);
+            this.numeric_sundiffusecolor_b.Location = new System.Drawing.Point(381, 305);
             this.numeric_sundiffusecolor_b.Maximum = new decimal(new int[] {
             1,
             0,
@@ -451,7 +452,7 @@
             0,
             0,
             131072});
-            this.numeric_sundiffusecolor_g.Location = new System.Drawing.Point(284, 308);
+            this.numeric_sundiffusecolor_g.Location = new System.Drawing.Point(284, 305);
             this.numeric_sundiffusecolor_g.Maximum = new decimal(new int[] {
             1,
             0,
@@ -471,7 +472,7 @@
             0,
             0,
             131072});
-            this.numeric_sundiffusecolor_r.Location = new System.Drawing.Point(188, 307);
+            this.numeric_sundiffusecolor_r.Location = new System.Drawing.Point(188, 304);
             this.numeric_sundiffusecolor_r.Maximum = new decimal(new int[] {
             1,
             0,
@@ -486,7 +487,7 @@
             // 
             this.lbl_sundiffusecolor_b.AutoSize = true;
             this.lbl_sundiffusecolor_b.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_sundiffusecolor_b.Location = new System.Drawing.Point(353, 310);
+            this.lbl_sundiffusecolor_b.Location = new System.Drawing.Point(353, 307);
             this.lbl_sundiffusecolor_b.Name = "lbl_sundiffusecolor_b";
             this.lbl_sundiffusecolor_b.Size = new System.Drawing.Size(26, 20);
             this.lbl_sundiffusecolor_b.TabIndex = 24;
@@ -496,7 +497,7 @@
             // 
             this.lbl_sundiffusecolor_g.AutoSize = true;
             this.lbl_sundiffusecolor_g.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_sundiffusecolor_g.Location = new System.Drawing.Point(256, 310);
+            this.lbl_sundiffusecolor_g.Location = new System.Drawing.Point(256, 307);
             this.lbl_sundiffusecolor_g.Name = "lbl_sundiffusecolor_g";
             this.lbl_sundiffusecolor_g.Size = new System.Drawing.Size(27, 20);
             this.lbl_sundiffusecolor_g.TabIndex = 23;
@@ -506,7 +507,7 @@
             // 
             this.lbl_sundiffusecolor_r.AutoSize = true;
             this.lbl_sundiffusecolor_r.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_sundiffusecolor_r.Location = new System.Drawing.Point(161, 310);
+            this.lbl_sundiffusecolor_r.Location = new System.Drawing.Point(161, 307);
             this.lbl_sundiffusecolor_r.Name = "lbl_sundiffusecolor_r";
             this.lbl_sundiffusecolor_r.Size = new System.Drawing.Size(26, 20);
             this.lbl_sundiffusecolor_r.TabIndex = 22;
@@ -516,7 +517,7 @@
             // 
             this.lbl_diffusefraction_value.AutoSize = true;
             this.lbl_diffusefraction_value.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.lbl_diffusefraction_value.Location = new System.Drawing.Point(427, 212);
+            this.lbl_diffusefraction_value.Location = new System.Drawing.Point(427, 209);
             this.lbl_diffusefraction_value.Name = "lbl_diffusefraction_value";
             this.lbl_diffusefraction_value.Size = new System.Drawing.Size(16, 17);
             this.lbl_diffusefraction_value.TabIndex = 21;
@@ -526,7 +527,7 @@
             // 
             this.lbl_ambient_value.AutoSize = true;
             this.lbl_ambient_value.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.lbl_ambient_value.Location = new System.Drawing.Point(427, 165);
+            this.lbl_ambient_value.Location = new System.Drawing.Point(427, 162);
             this.lbl_ambient_value.Name = "lbl_ambient_value";
             this.lbl_ambient_value.Size = new System.Drawing.Size(16, 17);
             this.lbl_ambient_value.TabIndex = 21;
@@ -535,7 +536,7 @@
             // slider_diffusefraction
             // 
             this.slider_diffusefraction.LargeChange = 1;
-            this.slider_diffusefraction.Location = new System.Drawing.Point(163, 209);
+            this.slider_diffusefraction.Location = new System.Drawing.Point(163, 206);
             this.slider_diffusefraction.Maximum = 200;
             this.slider_diffusefraction.Name = "slider_diffusefraction";
             this.slider_diffusefraction.Size = new System.Drawing.Size(262, 45);
@@ -546,7 +547,7 @@
             // slider_ambient
             // 
             this.slider_ambient.LargeChange = 1;
-            this.slider_ambient.Location = new System.Drawing.Point(163, 162);
+            this.slider_ambient.Location = new System.Drawing.Point(163, 155);
             this.slider_ambient.Maximum = 200;
             this.slider_ambient.Name = "slider_ambient";
             this.slider_ambient.Size = new System.Drawing.Size(262, 45);
@@ -573,7 +574,7 @@
             0,
             0,
             131072});
-            this.numeric_suncolor_b.Location = new System.Drawing.Point(381, 257);
+            this.numeric_suncolor_b.Location = new System.Drawing.Point(381, 254);
             this.numeric_suncolor_b.Maximum = new decimal(new int[] {
             1,
             0,
@@ -593,7 +594,7 @@
             0,
             0,
             131072});
-            this.numeric_suncolor_g.Location = new System.Drawing.Point(284, 258);
+            this.numeric_suncolor_g.Location = new System.Drawing.Point(284, 255);
             this.numeric_suncolor_g.Maximum = new decimal(new int[] {
             1,
             0,
@@ -613,7 +614,7 @@
             0,
             0,
             131072});
-            this.numeric_color_b.Location = new System.Drawing.Point(381, 114);
+            this.numeric_color_b.Location = new System.Drawing.Point(381, 110);
             this.numeric_color_b.Maximum = new decimal(new int[] {
             1,
             0,
@@ -633,7 +634,7 @@
             0,
             0,
             131072});
-            this.numeric_suncolor_r.Location = new System.Drawing.Point(188, 258);
+            this.numeric_suncolor_r.Location = new System.Drawing.Point(188, 255);
             this.numeric_suncolor_r.Maximum = new decimal(new int[] {
             1,
             0,
@@ -653,7 +654,7 @@
             0,
             0,
             131072});
-            this.numeric_color_g.Location = new System.Drawing.Point(284, 114);
+            this.numeric_color_g.Location = new System.Drawing.Point(284, 110);
             this.numeric_color_g.Maximum = new decimal(new int[] {
             1,
             0,
@@ -668,7 +669,7 @@
             // 
             this.lbl_suncolor_b.AutoSize = true;
             this.lbl_suncolor_b.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_suncolor_b.Location = new System.Drawing.Point(353, 260);
+            this.lbl_suncolor_b.Location = new System.Drawing.Point(353, 257);
             this.lbl_suncolor_b.Name = "lbl_suncolor_b";
             this.lbl_suncolor_b.Size = new System.Drawing.Size(26, 20);
             this.lbl_suncolor_b.TabIndex = 15;
@@ -683,7 +684,7 @@
             0,
             0,
             131072});
-            this.numeric_color_r.Location = new System.Drawing.Point(188, 114);
+            this.numeric_color_r.Location = new System.Drawing.Point(188, 110);
             this.numeric_color_r.Maximum = new decimal(new int[] {
             1,
             0,
@@ -698,7 +699,7 @@
             // 
             this.lbl_suncolor_g.AutoSize = true;
             this.lbl_suncolor_g.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_suncolor_g.Location = new System.Drawing.Point(256, 260);
+            this.lbl_suncolor_g.Location = new System.Drawing.Point(256, 257);
             this.lbl_suncolor_g.Name = "lbl_suncolor_g";
             this.lbl_suncolor_g.Size = new System.Drawing.Size(27, 20);
             this.lbl_suncolor_g.TabIndex = 14;
@@ -708,7 +709,7 @@
             // 
             this.lbl_color_b.AutoSize = true;
             this.lbl_color_b.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_color_b.Location = new System.Drawing.Point(353, 114);
+            this.lbl_color_b.Location = new System.Drawing.Point(353, 110);
             this.lbl_color_b.Name = "lbl_color_b";
             this.lbl_color_b.Size = new System.Drawing.Size(26, 20);
             this.lbl_color_b.TabIndex = 15;
@@ -718,7 +719,7 @@
             // 
             this.lbl_suncolor_r.AutoSize = true;
             this.lbl_suncolor_r.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_suncolor_r.Location = new System.Drawing.Point(161, 260);
+            this.lbl_suncolor_r.Location = new System.Drawing.Point(161, 257);
             this.lbl_suncolor_r.Name = "lbl_suncolor_r";
             this.lbl_suncolor_r.Size = new System.Drawing.Size(26, 20);
             this.lbl_suncolor_r.TabIndex = 13;
@@ -728,7 +729,7 @@
             // 
             this.lbl_color_g.AutoSize = true;
             this.lbl_color_g.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_color_g.Location = new System.Drawing.Point(256, 114);
+            this.lbl_color_g.Location = new System.Drawing.Point(256, 110);
             this.lbl_color_g.Name = "lbl_color_g";
             this.lbl_color_g.Size = new System.Drawing.Size(27, 20);
             this.lbl_color_g.TabIndex = 14;
@@ -738,7 +739,7 @@
             // 
             this.lbl_color_r.AutoSize = true;
             this.lbl_color_r.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.lbl_color_r.Location = new System.Drawing.Point(161, 114);
+            this.lbl_color_r.Location = new System.Drawing.Point(161, 110);
             this.lbl_color_r.Name = "lbl_color_r";
             this.lbl_color_r.Size = new System.Drawing.Size(26, 20);
             this.lbl_color_r.TabIndex = 13;
@@ -844,7 +845,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(432, 599);
+            this.label1.Location = new System.Drawing.Point(12, 598);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(108, 13);
             this.label1.TabIndex = 39;
@@ -853,17 +854,29 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(586, 599);
+            this.label2.Location = new System.Drawing.Point(126, 598);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(144, 13);
             this.label2.TabIndex = 40;
             this.label2.Text = "Email: carltyer.se@gmail.com";
+            // 
+            // btn_copyfrom
+            // 
+            this.btn_copyfrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_copyfrom.Location = new System.Drawing.Point(642, 588);
+            this.btn_copyfrom.Name = "btn_copyfrom";
+            this.btn_copyfrom.Size = new System.Drawing.Size(88, 23);
+            this.btn_copyfrom.TabIndex = 41;
+            this.btn_copyfrom.Text = "Copy From...";
+            this.btn_copyfrom.UseVisualStyleBackColor = true;
+            this.btn_copyfrom.Click += new System.EventHandler(this.btn_copyfrom_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(742, 616);
+            this.Controls.Add(this.btn_copyfrom);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lbl_folderPath);
@@ -963,6 +976,7 @@
         private System.Windows.Forms.Label lbl_folderPath;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btn_copyfrom;
     }
 }
 

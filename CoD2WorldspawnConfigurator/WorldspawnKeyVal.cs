@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoD2WorldspawnConfigurator
 {
-    internal class WorldspawnKeyVal
+    public class WorldspawnKeyVal
     {
         public string Key { get; set; }
         public string Value { get; set; }

@@ -21,7 +21,7 @@ namespace CoD2WorldspawnConfigurator
         public static string BounceFraction { get { return "The intensity of the Global Illumination calculation. Higher numbers mean faltter shading where light is present.\nRange: 0 - 1"; } }
     }
 
-    internal class Worldspawn
+    public class Worldspawn
     {
         // Member Variables
         private List<WorldspawnKeyVal> worldspawnKeyVals = new List<WorldspawnKeyVal>();
