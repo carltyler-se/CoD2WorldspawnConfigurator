@@ -11,17 +11,14 @@ namespace CoD2WorldspawnConfigurator
     static class MapHandler
     {
         private static string mapSourceFolder = "";
+        private static string MapSourceFolder { get { return mapSourceFolder; } set { MapSourceFolder = value; } }
+
         private static readonly string mapExtension = ".map";
 
         public static void SetMapSourceFolder(string path)
         {
             mapSourceFolder = path;
             if (!mapSourceFolder.EndsWith("\\")) { mapSourceFolder += "\\"; }
-        }
-
-        public static string GetMapSourceFolder()
-        {
-            return mapSourceFolder;
         }
 
         public static bool MapExists(string mapName)
@@ -88,18 +85,6 @@ namespace CoD2WorldspawnConfigurator
             return fetchedKeyVals;
         }
 
-        private static WorldspawnKeyVal ParseLine(string line)
-        {
-            line = line.Replace("\"", string.Empty);
-
-            //northyaw 90
-
-            string[] splitLine = line.Split(new char[] { ' ' }, 2, System.StringSplitOptions.None);
-            //northyaw ([0])
-            //90 ([1])
-            return new WorldspawnKeyVal(splitLine[0], splitLine[1]);
-        }
-
         public static bool SaveWorldspawnSettings(string mapName, List<WorldspawnKeyVal> keyVals)
         {
             if (!MapExists(mapName))
@@ -114,15 +99,15 @@ namespace CoD2WorldspawnConfigurator
 
             try
             {
-                using(StreamReader reader = new StreamReader(mapSourceFolder + mapName))
+                using (StreamReader reader = new StreamReader(mapSourceFolder + mapName))
                 {
                     while (!reader.EndOfStream)
                     {
-                        allLines.Add(reader.ReadLine()); 
+                        allLines.Add(reader.ReadLine());
                     }
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
@@ -145,19 +130,19 @@ namespace CoD2WorldspawnConfigurator
 
             List<WorldspawnKeyVal> newKeyVals = new List<WorldspawnKeyVal>();
 
-            foreach(WorldspawnKeyVal keyVal in keyVals)
+            foreach (WorldspawnKeyVal keyVal in keyVals)
             {
                 bool kvFound = false;
-                foreach(WorldspawnKeyVal isolatedKV in isolatedKeyVals)
+                foreach (WorldspawnKeyVal isolatedKV in isolatedKeyVals)
                 {
-                    if(keyVal.Key == isolatedKV.Key)
+                    if (keyVal.Key == isolatedKV.Key)
                     {
                         isolatedKV.Value = keyVal.Value;
                         kvFound = true;
                         break;
                     }
                 }
-                if(!kvFound)
+                if (!kvFound)
                 {
                     newKeyVals.Add(keyVal);
                 }
@@ -172,17 +157,17 @@ namespace CoD2WorldspawnConfigurator
                 using (StreamWriter writer = new StreamWriter(mapSourceFolder + mapName))
                 {
                     //write the first 3 lines first
-                    for(int i = 0; i < 3; i++)
+                    for (int i = 0; i < 3; i++)
                     {
                         writer.WriteLine(allLines[i]);
                     }
                     // write the worldspawns
-                    foreach(WorldspawnKeyVal keyVal in isolatedKeyVals)
+                    foreach (WorldspawnKeyVal keyVal in isolatedKeyVals)
                     {
                         writer.WriteLine(keyVal.ToString());
                     }
                     // write the remaining lines
-                    for(int i = postWorldspawnIndex; i < allLines.Count; i++)
+                    for (int i = postWorldspawnIndex; i < allLines.Count; i++)
                     {
                         writer.WriteLine(allLines[i]);
                     }
@@ -195,6 +180,20 @@ namespace CoD2WorldspawnConfigurator
 
             return true;
         }
+
+        private static WorldspawnKeyVal ParseLine(string line)
+        {
+            line = line.Replace("\"", string.Empty);
+
+            //northyaw 90
+
+            string[] splitLine = line.Split(new char[] { ' ' }, 2, System.StringSplitOptions.None);
+            //northyaw ([0])
+            //90 ([1])
+            return new WorldspawnKeyVal(splitLine[0], splitLine[1]);
+        }
+
+        
 
         /// <summary>
         /// Returns null if getting info was unsuccessful
