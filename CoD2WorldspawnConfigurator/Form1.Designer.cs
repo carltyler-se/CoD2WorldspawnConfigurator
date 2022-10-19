@@ -85,6 +85,8 @@
             this.listBox_MapList = new System.Windows.Forms.ListBox();
             this.btn_default = new System.Windows.Forms.Button();
             this.lbl_folderPath = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.grpbox_worldspawn.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_bouncefraction)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_sundirection_z)).BeginInit();
@@ -839,11 +841,31 @@
             this.lbl_folderPath.TabIndex = 38;
             this.lbl_folderPath.Text = "No Folder Selected";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(432, 599);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(108, 13);
+            this.label1.TabIndex = 39;
+            this.label1.Text = "Created by: Carl Tyler";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(586, 599);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(144, 13);
+            this.label2.TabIndex = 40;
+            this.label2.Text = "Email: carltyer.se@gmail.com";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(742, 602);
+            this.ClientSize = new System.Drawing.Size(742, 616);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lbl_folderPath);
             this.Controls.Add(this.btn_default);
             this.Controls.Add(this.listBox_MapList);
@@ -939,6 +961,8 @@
         private System.Windows.Forms.ListBox listBox_MapList;
         private System.Windows.Forms.Button btn_default;
         private System.Windows.Forms.Label lbl_folderPath;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 
