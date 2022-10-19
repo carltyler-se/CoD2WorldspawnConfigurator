@@ -42,7 +42,6 @@ namespace CoD2WorldspawnConfigurator
             return filteredNames.ToArray();
         }
 
-        //returns false if an error occurs
         public static List<WorldspawnKeyVal> GetWorldspawnSettings(string mapName)
         {
             if (!MapExists(mapName))
@@ -193,13 +192,6 @@ namespace CoD2WorldspawnConfigurator
             return new WorldspawnKeyVal(splitLine[0], splitLine[1]);
         }
 
-        
-
-        /// <summary>
-        /// Returns null if getting info was unsuccessful
-        /// </summary>
-        /// <param name="fullURL"></param>
-        /// <returns></returns>
         public static MapInfo GetMapInfo(string fullURL)
         {
             if (!File.Exists(fullURL)) return null;
@@ -217,7 +209,7 @@ namespace CoD2WorldspawnConfigurator
             // package mapinfo with things
             MapInfo mapInfo = new MapInfo();
             mapInfo.Name = mapName;
-            mapInfo.Worldspawn.SetWorldspawnKeyVals(GetWorldspawnSettings(mapName));
+            mapInfo.Worldspawn.SetWorldspawnKeyVals(GetWorldspawnSettings(fullURL));
 
             return mapInfo;
         }

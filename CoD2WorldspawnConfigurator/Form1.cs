@@ -13,7 +13,7 @@ namespace CoD2WorldspawnConfigurator
 {
     public partial class Form1 : Form
     {
-        string sourceFolderURL = "";
+        string _sourceFolderURL = "";
         List<string> mapNames = new List<string>();
         MapInfo loadedMap = null;
 
@@ -22,16 +22,22 @@ namespace CoD2WorldspawnConfigurator
         public Form1()
         {
             InitializeComponent();
-            Settings.SettingsFileLocation = Directory.GetCurrentDirectory() + "\\settings.ini";
-            MapHandler.SetMapSourceFolder(Settings.GetMapSourceFolderUrl());
-            
-            if(Directory.Exists(Settings.GetMapSourceFolderUrl()))
-                PreloadMapsFromURL(Settings.GetMapSourceFolderUrl());
-            else 
-                mapNames = new List<string>();
-
             AddToolTips();
 
+
+            // Set where the settings file is located
+            Settings.SettingsFileLocation = Directory.GetCurrentDirectory() + "\\settings.ini";
+
+            _sourceFolderURL = Settings.GetMapSourceFolderUrl();
+
+            if(Directory.Exists(_sourceFolderURL))
+            {
+                LoadMapsFromURL(_sourceFolderURL);
+            }
+            else
+            {
+                mapNames = new List<string>();
+            }
         }
 
         private void AddToolTips()
@@ -114,12 +120,11 @@ namespace CoD2WorldspawnConfigurator
             toolTipBounceFraction.SetToolTip(lbl_bouncefraction, WorldspawnDescription.BounceFraction);
         }
 
-        private void PreloadMapsFromURL(string url)
+        private void LoadMapsFromURL(string url)
         {
             loadedMap = null;
-            sourceFolderURL = url;
-            mapNames = MapHandler.GetAllMapNamesInFolder(sourceFolderURL).ToList();
-            LoadListBoxWithNames(mapNames);
+            mapNames = MapHandler.GetAllMapNamesInFolder(_sourceFolderURL).ToList();
+            LoadListBox(mapNames);
             lbl_folderPath.Text = Settings.GetMapSourceFolderUrl();
         }
 
@@ -239,8 +244,8 @@ namespace CoD2WorldspawnConfigurator
 
                 //Refresh the map list
                 int previousSelectionIndex = listBox_MapList.SelectedIndex;
-                mapNames = MapHandler.GetAllMapNamesInFolder(sourceFolderURL).ToList();
-                LoadListBoxWithNames(mapNames);
+                mapNames = MapHandler.GetAllMapNamesInFolder(_sourceFolderURL).ToList();
+                LoadListBox(mapNames);
                 listBox_MapList.SelectedIndex = previousSelectionIndex;
                 SetUIValues();
             }
@@ -272,16 +277,15 @@ namespace CoD2WorldspawnConfigurator
             FolderBrowserDialog browser = new FolderBrowserDialog();
             DialogResult result = browser.ShowDialog();
 
-
             if(result == DialogResult.OK)
             {
-                sourceFolderURL = browser.SelectedPath;
-                lbl_folderPath.Text = sourceFolderURL;
-                Settings.SaveMapSourceLocationToFile(sourceFolderURL);
+                _sourceFolderURL = browser.SelectedPath;
+                lbl_folderPath.Text = _sourceFolderURL;
+                Settings.SaveMapSourceLocationToFile(_sourceFolderURL);
                 SetButtonsEnabled(false);
                 loadedMap = null;
-                mapNames = MapHandler.GetAllMapNamesInFolder(sourceFolderURL).ToList();
-                LoadListBoxWithNames(mapNames);
+                mapNames = MapHandler.GetAllMapNamesInFolder(_sourceFolderURL).ToList();
+                LoadListBox(mapNames);
             }
             else if(result == DialogResult.Cancel)
             {
@@ -289,7 +293,7 @@ namespace CoD2WorldspawnConfigurator
             }               
         }
 
-        private void LoadListBoxWithNames(List<string> names)
+        private void LoadListBox(List<string> names)
         {
             listBox_MapList.Items.Clear();
             foreach(string n in names)

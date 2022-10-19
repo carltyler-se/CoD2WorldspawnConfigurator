@@ -766,11 +766,11 @@
             // 
             this.lbl_loadedmapname.AutoEllipsis = true;
             this.lbl_loadedmapname.AutoSize = true;
-            this.lbl_loadedmapname.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.lbl_loadedmapname.Location = new System.Drawing.Point(339, 20);
+            this.lbl_loadedmapname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.lbl_loadedmapname.Location = new System.Drawing.Point(320, 20);
             this.lbl_loadedmapname.MinimumSize = new System.Drawing.Size(130, 0);
             this.lbl_loadedmapname.Name = "lbl_loadedmapname";
-            this.lbl_loadedmapname.Size = new System.Drawing.Size(130, 17);
+            this.lbl_loadedmapname.Size = new System.Drawing.Size(130, 13);
             this.lbl_loadedmapname.TabIndex = 36;
             this.lbl_loadedmapname.Text = "[No Map Selected]";
             this.lbl_loadedmapname.Click += new System.EventHandler(this.lbl_loadedmapname_Click);
@@ -778,10 +778,10 @@
             // lbl_loadedmap
             // 
             this.lbl_loadedmap.AutoSize = true;
-            this.lbl_loadedmap.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.lbl_loadedmap.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.lbl_loadedmap.Location = new System.Drawing.Point(254, 20);
             this.lbl_loadedmap.Name = "lbl_loadedmap";
-            this.lbl_loadedmap.Size = new System.Drawing.Size(95, 17);
+            this.lbl_loadedmap.Size = new System.Drawing.Size(73, 13);
             this.lbl_loadedmap.TabIndex = 14;
             this.lbl_loadedmap.Text = "Loaded Map: ";
             // 
