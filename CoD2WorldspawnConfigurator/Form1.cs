@@ -28,7 +28,7 @@ namespace CoD2WorldspawnConfigurator
             // Set where the settings file is located
             Settings.SettingsFileLocation = Directory.GetCurrentDirectory() + "\\settings.ini";
 
-            _sourceFolderURL = Settings.GetMapSourceFolderUrl();
+            SetSourceFolder(Settings.GetMapSourceFolderUrl());
 
             if(Directory.Exists(_sourceFolderURL))
             {
@@ -38,6 +38,13 @@ namespace CoD2WorldspawnConfigurator
             {
                 mapNames = new List<string>();
             }
+        }
+
+        private void SetSourceFolder(string newURL)
+        {
+            _sourceFolderURL = newURL;
+            Settings.SaveMapSourceLocationToFile(_sourceFolderURL);
+            MapHandler.MapSourceFolder = _sourceFolderURL;
         }
 
         private void AddToolTips()
@@ -126,6 +133,7 @@ namespace CoD2WorldspawnConfigurator
             mapNames = MapHandler.GetAllMapNamesInFolder(_sourceFolderURL).ToList();
             LoadListBox(mapNames);
             lbl_folderPath.Text = Settings.GetMapSourceFolderUrl();
+            ZeroiseForm();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -175,15 +183,25 @@ namespace CoD2WorldspawnConfigurator
 
         private void btn_clear_Click(object sender, EventArgs e)
         {
+            ZeroiseForm();
+        }
+
+        private void ZeroiseForm()
+        {
             // remove saved map
             loadedMap = null;
 
             //RGB pickers
-            foreach(Control c in grpbox_worldspawn.Controls)
+            foreach (Control c in grpbox_worldspawn.Controls)
             {
-                if(c is NumericUpDown)
+                if (c is NumericUpDown)
                 {
                     NumericUpDown b = (NumericUpDown)c;
+                    b.Value = 0;
+                }
+                if(c is TrackBar)
+                {
+                    TrackBar b = (TrackBar)c;
                     b.Value = 0;
                 }
             }
@@ -201,7 +219,11 @@ namespace CoD2WorldspawnConfigurator
 
         private void UpdateUI()
         {
-            lbl_loadedmapname.Text = loadedMap.Name;
+            if (loadedMap != null)
+                lbl_loadedmapname.Text = loadedMap.Name;
+            else
+                lbl_loadedmapname.Text = "[No Map Selected]";
+
             UpdateUIValues();
         }
 
@@ -239,7 +261,10 @@ namespace CoD2WorldspawnConfigurator
                     loadedMap.Worldspawn = GetWorldspawnFromUI();
 
                     // Save the map using MapHandler
-                    MapHandler.SaveWorldspawnSettings(loadedMap.Name, loadedMap.Worldspawn.GetWorldspawnKeyVals());
+                    //MapHandler.SaveWorldspawnSettings(loadedMap.Name, loadedMap.Worldspawn.GetWorldspawnKeyVals());
+
+                    // Save the map using MapHandler with a backup before the change
+                    MapHandler.SaveWorldspawnSettingsWithBackup(loadedMap.FileURL, loadedMap.Worldspawn.GetWorldspawnKeyVals());
                 }
 
                 //Refresh the map list
@@ -281,8 +306,11 @@ namespace CoD2WorldspawnConfigurator
             {
                 _sourceFolderURL = browser.SelectedPath;
                 lbl_folderPath.Text = _sourceFolderURL;
-                Settings.SaveMapSourceLocationToFile(_sourceFolderURL);
+                SetSourceFolder(_sourceFolderURL);
                 SetButtonsEnabled(false);
+
+                LoadMapsFromURL(_sourceFolderURL);
+
                 loadedMap = null;
                 mapNames = MapHandler.GetAllMapNamesInFolder(_sourceFolderURL).ToList();
                 LoadListBox(mapNames);
@@ -372,25 +400,26 @@ namespace CoD2WorldspawnConfigurator
                 
                     if(loadedMap != null)
                     {
-                        string worldspawnString = "";
-                
-                        if (loadedMap.Worldspawn.Count() == 0) 
-                            worldspawnString = $@"No Worldspawn Found";
-                        else 
-                        { 
-                            foreach (WorldspawnKeyVal keyVal in loadedMap.Worldspawn.GetWorldspawnKeyVals())
+                        if(loadedMap.Worldspawn != null)
+                        {
+                            if (loadedMap.Worldspawn.Count() == 0)
                             {
-                                worldspawnString += $@"{keyVal.Key}, {keyVal.Value}{System.Environment.NewLine}";
-                            }        
+                                MessageBox.Show($@"No Worldspawn Found", "Warning");
+                                listBox_MapList.SelectedIndex = -1;
+                                SetButtonsEnabled(false);
+                                SetUIValues();
+                                ZeroiseForm();
+                            }
+                            else
+                            {
+                                SetButtonsEnabled(true);
+                                SetUIValues();
+                            }
                         }
-                        SetButtonsEnabled(true);
-                        SetUIValues();           
                     }
                 }
-
             }
             else { SetButtonsEnabled(false); }
-
         }
     }
 }

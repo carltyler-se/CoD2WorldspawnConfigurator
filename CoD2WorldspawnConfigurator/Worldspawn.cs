@@ -123,6 +123,7 @@ namespace CoD2WorldspawnConfigurator
 
         public int Count()
         {
+            if (worldspawnKeyVals == null) return 0;
             return worldspawnKeyVals.Count();
         }
 

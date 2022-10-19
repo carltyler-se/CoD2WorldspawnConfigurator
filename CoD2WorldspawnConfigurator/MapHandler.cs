@@ -11,13 +11,19 @@ namespace CoD2WorldspawnConfigurator
     static class MapHandler
     {
         private static string mapSourceFolder = "";
-        private static string MapSourceFolder { get { return mapSourceFolder; } set { MapSourceFolder = value; } }
+        public static string MapSourceFolder { get { return mapSourceFolder; } 
+            set 
+            { 
+                mapSourceFolder = value;
+                if (!mapSourceFolder.EndsWith("\\")) { mapSourceFolder += "\\"; }
+            } 
+        }
 
         private static readonly string mapExtension = ".map";
 
         public static void SetMapSourceFolder(string path)
         {
-            mapSourceFolder = path;
+            MapSourceFolder = path;
             if (!mapSourceFolder.EndsWith("\\")) { mapSourceFolder += "\\"; }
         }
 
@@ -44,14 +50,14 @@ namespace CoD2WorldspawnConfigurator
 
         public static List<WorldspawnKeyVal> GetWorldspawnSettings(string mapName)
         {
-            if (!MapExists(mapName))
+            if (!MapExists(Utils.GetMapNameFromURL(mapName)))
                 return null;
 
             List<WorldspawnKeyVal> fetchedKeyVals = new List<WorldspawnKeyVal>();
 
             try
             {
-                using (StreamReader reader = new StreamReader(mapSourceFolder + mapName))
+                using (StreamReader reader = new StreamReader(mapName))
                 {
                     string currentLine = "";
 
@@ -84,6 +90,14 @@ namespace CoD2WorldspawnConfigurator
             return fetchedKeyVals;
         }
 
+        public static bool SaveWorldspawnSettingsWithBackup(string mapName, List<WorldspawnKeyVal> keyVals)
+        {
+            string customTime = $@"{DateTime.Now.Hour}-{DateTime.Now.Minute}-{DateTime.Now.Second}";
+            string copiedFileName = $@"{mapName}_backup_{customTime}.map";
+            File.Copy(mapName, copiedFileName);
+            bool hasSaved = SaveWorldspawnSettings(Utils.GetMapNameFromURL(mapName), keyVals);
+            return hasSaved;
+        }
         public static bool SaveWorldspawnSettings(string mapName, List<WorldspawnKeyVal> keyVals)
         {
             if (!MapExists(mapName))
@@ -209,6 +223,7 @@ namespace CoD2WorldspawnConfigurator
             // package mapinfo with things
             MapInfo mapInfo = new MapInfo();
             mapInfo.Name = mapName;
+            mapInfo.FileURL = fullURL;
             mapInfo.Worldspawn.SetWorldspawnKeyVals(GetWorldspawnSettings(fullURL));
 
             return mapInfo;
