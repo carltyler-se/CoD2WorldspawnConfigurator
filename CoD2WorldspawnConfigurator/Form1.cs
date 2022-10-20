@@ -23,7 +23,7 @@ namespace CoD2WorldspawnConfigurator
         {
             InitializeComponent();
             AddToolTips();
-
+            SetButtonsEnabled(false);
 
             // Set where the settings file is located
             Settings.SettingsFileLocation = Directory.GetCurrentDirectory() + "\\settings.ini";
@@ -241,12 +241,14 @@ namespace CoD2WorldspawnConfigurator
         {
             btn_save.Enabled = val;
             btn_default.Enabled = val;
+            btn_copyfrom.Enabled = val;
         }
 
         private void ToggleButtonsEnabled()
         {
             btn_save.Enabled = !btn_save.Enabled;
             btn_default.Enabled = !btn_default.Enabled;
+            btn_copyfrom.Enabled = !btn_copyfrom.Enabled;
         }
 
         private void btn_save_Click(object sender, EventArgs e)
@@ -272,7 +274,7 @@ namespace CoD2WorldspawnConfigurator
                 mapNames = MapHandler.GetAllMapNamesInFolder(_sourceFolderURL).ToList();
                 LoadListBox(mapNames);
                 listBox_MapList.SelectedIndex = previousSelectionIndex;
-                SetUIValues();
+                SetUIValuesToLoadedMap();
             }
         }
 
@@ -334,7 +336,7 @@ namespace CoD2WorldspawnConfigurator
             }
         }
 
-        private void SetUIValues()
+        private void SetUIValuesToLoadedMap()
         {
             if (loadedMap == null) return;
 
@@ -343,6 +345,40 @@ namespace CoD2WorldspawnConfigurator
             textBox1.Text = w.GetKeyVal("classname").Value;
 
             string[] colorVals = w.GetKeyVal("_color").Value.Split(' '); 
+            numeric_color_r.Value = decimal.Parse(colorVals[0]);
+            numeric_color_g.Value = decimal.Parse(colorVals[1]);
+            numeric_color_b.Value = decimal.Parse(colorVals[2]);
+
+            string[] sunColorVals = w.GetKeyVal("suncolor").Value.Split(' ');
+            numeric_suncolor_r.Value = decimal.Parse(sunColorVals[0]);
+            numeric_suncolor_g.Value = decimal.Parse(sunColorVals[1]);
+            numeric_suncolor_b.Value = decimal.Parse(sunColorVals[2]);
+
+            string[] sunDiffuseColorVals = w.GetKeyVal("sundiffusecolor").Value.Split(' ');
+            numeric_sundiffusecolor_r.Value = decimal.Parse(sunDiffuseColorVals[0]);
+            numeric_sundiffusecolor_g.Value = decimal.Parse(sunDiffuseColorVals[1]);
+            numeric_sundiffusecolor_b.Value = decimal.Parse(sunDiffuseColorVals[2]);
+
+            string[] sunDirectionVals = w.GetKeyVal("sundirection").Value.Split(' ');
+            numeric_sundirection_x.Value = (int)decimal.Parse(sunDirectionVals[0]);
+            numeric_sundirection_y.Value = (int)decimal.Parse(sunDirectionVals[1]);
+            numeric_sundirection_z.Value = (int)decimal.Parse(sunDirectionVals[2]);
+
+            slider_ambient.Value = (int)(decimal.Parse(w.GetKeyVal("ambient").Value) * sliderMultiplier);
+            slider_northyaw.Value = (int)(decimal.Parse(w.GetKeyVal("northyaw").Value));
+            slider_diffusefraction.Value = (int)(decimal.Parse(w.GetKeyVal("diffusefraction").Value) * sliderMultiplier);
+            slider_sunlight.Value = (int)(decimal.Parse(w.GetKeyVal("sunlight").Value) * sliderMultiplier);
+            slider_contrastgain.Value = (int)(decimal.Parse(w.GetKeyVal("contrastgain").Value) * sliderMultiplier);
+            slider_bouncefraction.Value = (int)(decimal.Parse(w.GetKeyVal("bouncefraction").Value) * sliderMultiplier);
+
+            UpdateUI();
+        }
+
+        private void SetUIValuesToWorldspawn(Worldspawn w)
+        {
+             textBox1.Text = w.GetKeyVal("classname").Value;
+
+            string[] colorVals = w.GetKeyVal("_color").Value.Split(' ');
             numeric_color_r.Value = decimal.Parse(colorVals[0]);
             numeric_color_g.Value = decimal.Parse(colorVals[1]);
             numeric_color_b.Value = decimal.Parse(colorVals[2]);
@@ -379,7 +415,7 @@ namespace CoD2WorldspawnConfigurator
 
         private void btn_default_Click(object sender, EventArgs e)
         {
-            SetUIValues();
+            SetUIValuesToLoadedMap();
         }
 
         private void listBox_MapList_SelectedIndexChanged(object sender, EventArgs e)
@@ -407,13 +443,13 @@ namespace CoD2WorldspawnConfigurator
                                 MessageBox.Show($@"No Worldspawn Found", "Warning");
                                 listBox_MapList.SelectedIndex = -1;
                                 SetButtonsEnabled(false);
-                                SetUIValues();
+                                SetUIValuesToLoadedMap();
                                 ZeroiseForm();
                             }
                             else
                             {
                                 SetButtonsEnabled(true);
-                                SetUIValues();
+                                SetUIValuesToLoadedMap();
                             }
                         }
                     }
@@ -424,7 +460,22 @@ namespace CoD2WorldspawnConfigurator
 
         private void btn_copyfrom_Click(object sender, EventArgs e)
         {
+            Form2 copyFromWindow = new Form2(mapNames);
+            var result = copyFromWindow.ShowDialog();
 
+            if(result == DialogResult.OK)
+            {
+                if(copyFromWindow.SelectedWorldspawn != null)
+                {
+                    SetUIValuesToWorldspawn(copyFromWindow.SelectedWorldspawn);
+                }
+            }
+            if(result == DialogResult.Cancel)
+            {
+
+            }
+
+            copyFromWindow.Dispose();
         }
     }
 }

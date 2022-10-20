@@ -48,6 +48,7 @@
             this.listbox_stockworldspawns.Name = "listbox_stockworldspawns";
             this.listbox_stockworldspawns.Size = new System.Drawing.Size(266, 225);
             this.listbox_stockworldspawns.TabIndex = 0;
+            this.listbox_stockworldspawns.SelectedIndexChanged += new System.EventHandler(this.listbox_stockworldspawns_SelectedIndexChanged);
             // 
             // tabControl1
             // 
@@ -58,6 +59,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(280, 255);
             this.tabControl1.TabIndex = 1;
+            this.tabControl1.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl1_Selected);
             // 
             // tabPage1
             // 
@@ -88,6 +90,7 @@
             this.listbox_myworldspawns.Name = "listbox_myworldspawns";
             this.listbox_myworldspawns.Size = new System.Drawing.Size(266, 225);
             this.listbox_myworldspawns.TabIndex = 2;
+            this.listbox_myworldspawns.SelectedIndexChanged += new System.EventHandler(this.listbox_myworldspawns_SelectedIndexChanged);
             // 
             // textbox_worldspawndata
             // 
@@ -101,12 +104,14 @@
             // 
             // btn_copy
             // 
+            this.btn_copy.Enabled = false;
             this.btn_copy.Location = new System.Drawing.Point(16, 269);
             this.btn_copy.Name = "btn_copy";
             this.btn_copy.Size = new System.Drawing.Size(82, 23);
             this.btn_copy.TabIndex = 3;
             this.btn_copy.Text = "Copy";
             this.btn_copy.UseVisualStyleBackColor = true;
+            this.btn_copy.Click += new System.EventHandler(this.btn_copy_Click);
             // 
             // btn_cancel
             // 
@@ -116,6 +121,7 @@
             this.btn_cancel.TabIndex = 4;
             this.btn_cancel.Text = "Cancel";
             this.btn_cancel.UseVisualStyleBackColor = true;
+            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
             // 
             // Form2
             // 

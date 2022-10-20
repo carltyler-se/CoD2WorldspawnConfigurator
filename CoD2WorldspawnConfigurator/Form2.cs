@@ -15,6 +15,9 @@ namespace CoD2WorldspawnConfigurator
         private List<MapInfo> stockWorldspawns;
         public List<MapInfo> StockWorldspawns { get { return stockWorldspawns; } set { stockWorldspawns = value; } }
 
+        private Worldspawn selectedWorldspawn;
+        public Worldspawn SelectedWorldspawn { get { return selectedWorldspawn; } set { selectedWorldspawn = value; } }
+
         private List<string> myWorldspawns;
         public List<string> MyWorldspawns { get { return myWorldspawns; } set { myWorldspawns = value; } }
 
@@ -26,6 +29,7 @@ namespace CoD2WorldspawnConfigurator
         public Form2(List<string> mapNames)
         {
             InitializeComponent();
+
             StockWorldspawns = GenerateStockWorldspawns();
             MyWorldspawns = mapNames;
 
@@ -38,8 +42,32 @@ namespace CoD2WorldspawnConfigurator
 
             //maps.Add(PackMapInfo("mapName", "northyaw", "_color", "ambient", "diffuseFraction", "sunColor", "sunDiffuseColor",
             //                      "sunlight", "sunDirection", "contrastGain", "bounceFraction"));
-            // TODO: hardcode map info
-
+            maps.Add(PackMapInfo("mp_breakout", "90", "1 0.95 0.95", "0.05", "0.31", "0.9 0.95 1", "0.80 0.82 0.85",
+                                  "1.5", "-137 305 0", "1", "1"));
+            maps.Add(PackMapInfo("mp_brecourt", "90", "0.47 0.56 0.62", "0.00", "0.35", "1 1 1", "0.9 0.95 1",
+                                  "0.8", "-40 44 0", "1", "1"));
+            maps.Add(PackMapInfo("mp_burgundy", "0", "0 0.5 1", "0.02", "0.3", "1 0.95 0.85", "0.85 0.9 1",
+                                  "1.5", "-45 210 0", "1", "1"));
+            maps.Add(PackMapInfo("mp_carentan", "0", "0.85 0.9 1", "0", "0.56", "1 0.95 0.85", "0.85 0.9 1",
+                                  "1.8", "-40 -138 0", "1", "1"));
+            maps.Add(PackMapInfo("mp_dawnville", "90", "0 0 0", "0", "0.6", "0.9 0.92 0.85", "0.85 0.9 1",
+                                  "1.2", "-57 169 0", "1", "1"));
+            maps.Add(PackMapInfo("mp_decoy", "180", "0 0 0", "0.0", "0.4", "0.5 0.52 0.55", "0.15 0.21 0.6",
+                                  "0.47", "-60 245 0", "1", "1"));
+            maps.Add(PackMapInfo("mp_downtown", "0", "1 0.96 0.98", "0.0", "0.4", "1 0.96 0.98", "0.9 0.9 0.96",
+                                  "1.15", "-24 -127 0", "0.4", "1"));
+            maps.Add(PackMapInfo("mp_farmhouse", "0", "0.89 0.70 0.41", "0", "0.4", "0.94 0.62 0.5", "0.58 0.59 0.71",
+                                  "1.3", "-19 -70 0", "1", "1"));
+            maps.Add(PackMapInfo("mp_leningrad", "0", "1 0.96 1.98", "0", "0.52", "1 0.96 0.98", "0.9 0.9 0.96",
+                                  "1.15", "-70 35 0", "1", "1"));
+            maps.Add(PackMapInfo("mp_matmata", "0", "1.0 0.78 0.30", "0.02", "0.45", "1 0.98 0.85", "1.0 0.86 0.89",
+                                  "1.45", "-20 315 0", "1", "1"));
+            maps.Add(PackMapInfo("mp_railyard", "0", "1 1 1", "0.1", "0.65", "1 1 1", "1 1 1",
+                                  "1.3", "-40 225 0", "1", "1"));
+            maps.Add(PackMapInfo("mp_toujane", "0", "0.81 0.80 0.70", "0.02", "0.4", "0.98 0.88 0.75", "0.98 0.88 0.92",
+                                  "1.3", "-45 135 0", "1", "1"));
+            maps.Add(PackMapInfo("mp_trainstation", "0", "0.85 0.90 1", "0.02", "0.3", "1 0.95 0.85", "0.85 0.90 1",
+                                  "1.5", "-45 210 0", "1", "1"));
             return maps;
         }
 
@@ -77,9 +105,81 @@ namespace CoD2WorldspawnConfigurator
             }
             foreach(string mapName in MyWorldspawns)
             {
-                listbox_myworldspawns.Items.Add(mapName);
+                string[] nameSplits = mapName.Split('\\');
+                listbox_myworldspawns.Items.Add(nameSplits[nameSplits.Length - 1]);
             }
             
+        }
+
+        private void PrintWorldspawn(Worldspawn wsToPrint)
+        {
+            textbox_worldspawndata.Clear();
+            textbox_worldspawndata.Refresh();
+            if (wsToPrint != null)
+            {
+                foreach (WorldspawnKeyVal kv in wsToPrint.GetWorldspawnKeyVals())
+                {
+                    textbox_worldspawndata.Text += "\"" + kv.Key + "\" \"" + kv.Value + "\"" + Environment.NewLine;
+                }
+            }
+            else 
+                textbox_worldspawndata.Text = "No Worldspawn Found";
+        }
+
+        private void listbox_stockworldspawns_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listbox_myworldspawns.SelectedIndex = -1;
+            if (listbox_stockworldspawns.SelectedIndex == -1) 
+            {
+                btn_copy.Enabled = false;
+                return;
+            }
+            
+            if(listbox_stockworldspawns.SelectedIndex > -1)
+            {
+                btn_copy.Enabled = true;
+                MapInfo info = StockWorldspawns[listbox_stockworldspawns.SelectedIndex];
+                SelectedWorldspawn = info.Worldspawn;
+                PrintWorldspawn(SelectedWorldspawn);
+            }
+        }
+
+        private void listbox_myworldspawns_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listbox_stockworldspawns.SelectedIndex = -1;
+            if (listbox_myworldspawns.SelectedIndex == -1)
+            {
+                btn_copy.Enabled = false;
+                return;
+            }
+
+            btn_copy.Enabled = true;
+            string mapURL = myWorldspawns[listbox_myworldspawns.SelectedIndex];
+            MapInfo info = MapHandler.GetMapInfo(mapURL);
+            SelectedWorldspawn = info.Worldspawn;
+            PrintWorldspawn(SelectedWorldspawn);
+        }
+
+        private void btn_cancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+
+        private void btn_copy_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void tabControl1_Selected(object sender, TabControlEventArgs e)
+        {
+            SelectedWorldspawn = null;
+            listbox_myworldspawns.SelectedIndex = -1;
+            listbox_stockworldspawns.SelectedIndex = -1;
+            btn_copy.Enabled = false;
+            textbox_worldspawndata.Clear();
+            textbox_worldspawndata.Refresh();
         }
     }
 }
