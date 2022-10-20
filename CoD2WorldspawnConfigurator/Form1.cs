@@ -22,8 +22,11 @@ namespace CoD2WorldspawnConfigurator
         public Form1()
         {
             InitializeComponent();
+
+            // Ensure things are initialised correctly
             AddToolTips();
             SetButtonsEnabled(false);
+            checkbox_createbackup.Checked = true;
 
             // Set where the settings file is located
             Settings.SettingsFileLocation = Directory.GetCurrentDirectory() + "\\settings.ini";
@@ -244,13 +247,6 @@ namespace CoD2WorldspawnConfigurator
             btn_copyfrom.Enabled = val;
         }
 
-        private void ToggleButtonsEnabled()
-        {
-            btn_save.Enabled = !btn_save.Enabled;
-            btn_default.Enabled = !btn_default.Enabled;
-            btn_copyfrom.Enabled = !btn_copyfrom.Enabled;
-        }
-
         private void btn_save_Click(object sender, EventArgs e)
         {
             if(loadedMap != null)
@@ -262,11 +258,14 @@ namespace CoD2WorldspawnConfigurator
                     // Extract the values from the UI
                     loadedMap.Worldspawn = GetWorldspawnFromUI();
 
-                    // Save the map using MapHandler
-                    //MapHandler.SaveWorldspawnSettings(loadedMap.Name, loadedMap.Worldspawn.GetWorldspawnKeyVals());
-
-                    // Save the map using MapHandler with a backup before the change
-                    MapHandler.SaveWorldspawnSettingsWithBackup(loadedMap.FileURL, loadedMap.Worldspawn.GetWorldspawnKeyVals());
+                    if(checkbox_createbackup.Checked)
+                    {
+                        bool hasSaved = MapHandler.SaveWorldspawnSettingsWithBackup(loadedMap.FileURL, loadedMap.Worldspawn.GetWorldspawnKeyVals());
+                    }
+                    else 
+                    {
+                        bool hasSaved = MapHandler.SaveWorldspawnSettings(loadedMap.Name, loadedMap.Worldspawn.GetWorldspawnKeyVals());
+                    }
                 }
 
                 //Refresh the map list
@@ -476,6 +475,20 @@ namespace CoD2WorldspawnConfigurator
             }
 
             copyFromWindow.Dispose();
+        }
+
+        private void checkbox_createbackup_CheckedChanged(object sender, EventArgs e)
+        {
+            if(checkbox_createbackup.Checked == false)
+            {
+                var result = MessageBox.Show("It is recommended to keep this control checked in case of errors!\nThis program is not " +
+                                             "responsible for any map data lost. Are you sure you want to uncheck this option?", "Caution!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if(result == DialogResult.No)
+                {
+                    checkbox_createbackup.Checked = true;
+                }
+            }
         }
     }
 }

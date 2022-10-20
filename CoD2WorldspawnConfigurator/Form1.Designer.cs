@@ -88,6 +88,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_copyfrom = new System.Windows.Forms.Button();
+            this.checkbox_createbackup = new System.Windows.Forms.CheckBox();
             this.grpbox_worldspawn.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_bouncefraction)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_sundirection_z)).BeginInit();
@@ -845,7 +846,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 598);
+            this.label1.Location = new System.Drawing.Point(12, 600);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(108, 13);
             this.label1.TabIndex = 39;
@@ -854,7 +855,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(126, 598);
+            this.label2.Location = new System.Drawing.Point(126, 600);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(144, 13);
             this.label2.TabIndex = 40;
@@ -863,7 +864,7 @@
             // btn_copyfrom
             // 
             this.btn_copyfrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_copyfrom.Location = new System.Drawing.Point(642, 588);
+            this.btn_copyfrom.Location = new System.Drawing.Point(642, 595);
             this.btn_copyfrom.Name = "btn_copyfrom";
             this.btn_copyfrom.Size = new System.Drawing.Size(88, 23);
             this.btn_copyfrom.TabIndex = 41;
@@ -871,11 +872,23 @@
             this.btn_copyfrom.UseVisualStyleBackColor = true;
             this.btn_copyfrom.Click += new System.EventHandler(this.btn_copyfrom_Click);
             // 
+            // checkbox_createbackup
+            // 
+            this.checkbox_createbackup.AutoSize = true;
+            this.checkbox_createbackup.Location = new System.Drawing.Point(415, 599);
+            this.checkbox_createbackup.Name = "checkbox_createbackup";
+            this.checkbox_createbackup.Size = new System.Drawing.Size(218, 17);
+            this.checkbox_createbackup.TabIndex = 42;
+            this.checkbox_createbackup.Text = "Create backup on save (Recommended)";
+            this.checkbox_createbackup.UseVisualStyleBackColor = true;
+            this.checkbox_createbackup.CheckedChanged += new System.EventHandler(this.checkbox_createbackup_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(742, 616);
+            this.ClientSize = new System.Drawing.Size(742, 625);
+            this.Controls.Add(this.checkbox_createbackup);
             this.Controls.Add(this.btn_copyfrom);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -977,6 +990,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_copyfrom;
+        private System.Windows.Forms.CheckBox checkbox_createbackup;
     }
 }
 
