@@ -14,6 +14,30 @@ namespace CoD2WorldspawnConfigurator
             return splits[splits.Length - 1];
         }
 
+        public static string GetMapNameFromURLWithoutExtension(string fullURL)
+        {
+            string fileName = GetMapNameFromURL(fullURL);
+            string[] nameSplits = fileName.Split('.');
+            return nameSplits[0];
+        }
+
+        public static string GetRootFolderFromURL(string fullURL)
+        {
+            string[] splits = fullURL.Split('\\');
+            string url = "";
+            for (int i = 0; i < splits.Length - 1; ++i)
+            {
+                url += splits[i] + "\\";
+            }
+            return url;
+        }
+
+        public static string GetFileExtensionFromURL(string fullURL)
+        {
+            string[] splits = fullURL.Split('.');
+            return "." + splits[splits.Length - 1];
+        }
+
         public static Worldspawn ParseWorldspawnString(string worldspawnString)
         {
             Worldspawn ws = new Worldspawn();

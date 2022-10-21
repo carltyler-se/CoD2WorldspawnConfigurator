@@ -251,6 +251,14 @@ namespace CoD2WorldspawnConfigurator
         {
             if(loadedMap != null)
             {
+                // Ensure the map still exists on save, in case file was deleted AFTER selection
+                if(!MapHandler.MapExists(loadedMap.Name))
+                {
+                    MessageBox.Show("Unable to save map. Map cannot be found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    LoadMapsFromURL(Settings.GetMapSourceFolderUrl());
+                    return;
+                }
+
                 DialogResult result = MessageBox.Show($@"Are you sure you want to overwrite the worldspawn of {loadedMap.Name}?", "Caution", MessageBoxButtons.YesNo);
 
                 if (result == DialogResult.Yes)
@@ -267,7 +275,6 @@ namespace CoD2WorldspawnConfigurator
                         bool hasSaved = MapHandler.SaveWorldspawnSettings(loadedMap.Name, loadedMap.Worldspawn.GetWorldspawnKeyVals());
                     }
                 }
-
                 //Refresh the map list
                 int previousSelectionIndex = listBox_MapList.SelectedIndex;
                 mapNames = MapHandler.GetAllMapNamesInFolder(_sourceFolderURL).ToList();
@@ -324,6 +331,7 @@ namespace CoD2WorldspawnConfigurator
 
         private void LoadListBox(List<string> names)
         {
+            listBox_MapList.SelectedIndex = -1;
             listBox_MapList.Items.Clear();
             foreach(string n in names)
             {
@@ -423,7 +431,6 @@ namespace CoD2WorldspawnConfigurator
             loadedMap = null;
             if(listBox_MapList.SelectedIndex != -1)
             {
-
                 if (mapNames[listBox_MapList.SelectedIndex] != null)
                     chosenMapURL = mapNames[listBox_MapList.SelectedIndex];
                 else 
@@ -452,6 +459,11 @@ namespace CoD2WorldspawnConfigurator
                             }
                         }
                     }
+                    else
+                    {
+                        MessageBox.Show("Unable to load map. Map cannot be found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        LoadMapsFromURL(chosenMapURL);
+                    }
                 }
             }
             else { SetButtonsEnabled(false); }
@@ -459,6 +471,13 @@ namespace CoD2WorldspawnConfigurator
 
         private void btn_copyfrom_Click(object sender, EventArgs e)
         {
+            if(!MapHandler.MapExists(loadedMap.Name))
+            {
+                MessageBox.Show("Current map cannot be found. Action not allowed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoadMapsFromURL(Settings.GetMapSourceFolderUrl());
+                return;
+            }
+
             Form2 copyFromWindow = new Form2(mapNames);
             var result = copyFromWindow.ShowDialog();
 
@@ -468,10 +487,6 @@ namespace CoD2WorldspawnConfigurator
                 {
                     SetUIValuesToWorldspawn(copyFromWindow.SelectedWorldspawn);
                 }
-            }
-            if(result == DialogResult.Cancel)
-            {
-
             }
 
             copyFromWindow.Dispose();

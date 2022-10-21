@@ -92,8 +92,11 @@ namespace CoD2WorldspawnConfigurator
 
         public static bool SaveWorldspawnSettingsWithBackup(string mapName, List<WorldspawnKeyVal> keyVals)
         {
-            string customTime = $@"{DateTime.Now.Hour}-{DateTime.Now.Minute}-{DateTime.Now.Second}";
-            string copiedFileName = $@"{mapName}_backup_{customTime}.map";
+            string customTime = $@"({DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}_{DateTime.Now.Hour}-{DateTime.Now.Minute}-{DateTime.Now.Second})";
+            string rootFolder = Utils.GetRootFolderFromURL(mapName);
+            string mapTitle = Utils.GetMapNameFromURLWithoutExtension(mapName);
+            string mapExtension = Utils.GetFileExtensionFromURL(mapName);
+            string copiedFileName = $@"{rootFolder}{mapTitle}_backup_{customTime}.{mapExtension}";
             File.Copy(mapName, copiedFileName);
             bool hasSaved = SaveWorldspawnSettings(Utils.GetMapNameFromURL(mapName), keyVals);
             return hasSaved;
