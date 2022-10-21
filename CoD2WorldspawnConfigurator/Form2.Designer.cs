@@ -133,7 +133,7 @@
             this.Controls.Add(this.textbox_worldspawndata);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form2";
-            this.Text = "Form2";
+            this.Text = "Copy From...";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
